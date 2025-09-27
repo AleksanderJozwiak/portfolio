@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Portfolio - Imię Nazwisko | Fullstack Developer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0d0d0d;
+        --bg-alt: #181818;
+        --accent: #ff8800;
+        --text: #f5f5f5;
+        --muted: #b3b3b3;
+        --radius: 18px;
+        --max: 1200px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Poppins, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header {
+        width: 100%;
+        max-width: var(--max);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px;
+        position: sticky;
+        top: 0;
+        background: rgba(13, 13, 13, 0.95);
+        backdrop-filter: blur(8px);
+        z-index: 99;
+      }
+      .logo {
+        font-weight: 700;
+        font-size: 22px;
+        color: var(--accent);
+      }
+      nav a {
+        margin-left: 24px;
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 500;
+        transition: 0.2s;
+      }
+      nav a:hover {
+        color: var(--accent);
+      }
+
+      .hero {
+        max-width: var(--max);
+        padding: 60px 24px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+      .hero p {
+        color: var(--muted);
+        margin-bottom: 24px;
+      }
+      .hero img {
+        width: 100%;
+        border-radius: var(--radius);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      }
+      .btn {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: var(--radius);
+        text-decoration: none;
+        font-weight: 600;
+        background: var(--accent);
+        color: white;
+        transition: 0.2s;
+      }
+      .btn:hover {
+        opacity: 0.85;
+      }
+
+      section {
+        max-width: var(--max);
+        width: 100%;
+        padding: 60px 24px;
+      }
+      h2 {
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+
+      .skills {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .skill {
+        padding: 8px 14px;
+        background: var(--bg-alt);
+        border-radius: var(--radius);
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      .projects {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+      .project {
+        background: var(--bg-alt);
+        border-radius: var(--radius);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s;
+      }
+      .project:hover {
+        transform: translateY(-6px);
+      }
+      .images-container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .images-container img {
+        max-width: 30%;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 2px dashed black;
+      }
+      .project-body {
+        padding: 18px;
+      }
+      .project-body h3 {
+        margin-bottom: 8px;
+      }
+      .tags {
+        margin-top: 8px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .tag {
+        background: #222;
+        padding: 6px 10px;
+        border-radius: 10px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .contact-info {
+        display: grid;
+        gap: 10px;
+        font-size: 16px;
+        color: var(--muted);
+      }
+
+      footer {
+        margin-top: 60px;
+        padding: 20px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 14px;
+        border-top: 1px solid #222;
+        width: 100%;
+      }
+
+      @media (max-width: 800px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .hero h1 {
+          font-size: 36px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">AJ</div>
+      <nav>
+        <a href="#about">O mnie</a>
+        <a href="#projects">Projekty</a>
+        <a href="#contact">Kontakt</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>
+          Aleksander
+          <div style="color: var(--accent)">Jóźwiak</div>
+        </h1>
+        <p>
+          Jestem fullstack developerem z doświadczeniem w C# oraz Vue.js, a
+          także w tworzeniu aplikacji mobilnych z wykorzystaniem Expo i React
+          Native. Tworzenie gier w Unity traktuję jako moją pasję, którą
+          rozwijam równolegle.
+        </p>
+        <a href="#projects" class="btn">Zobacz projekty</a>
+        <br />
+        <br />
+        <a
+          href="https://github.com/AleksanderJozwiak"
+          target="_blank"
+          class="btn"
+          >Sprawdź Gita</a
+        >
+      </div>
+      <img src="./3dsmax/latarnia.jpg" alt="lamp" />
+    </section>
+
+    <section id="about">
+      <h2>O mnie</h2>
+      <p>
+        Na co dzień zajmuję się projektowaniem i implementacją aplikacji
+        webowych jako fullstack developer. W pracy korzystam głównie z C#,
+        Vue.js oraz technologii frontendowych i backendowych. Mam również
+        doświadczenie w budowie aplikacji mobilnych opartych o Expo React
+        Native. Po godzinach rozwijam swoją pasję do gamedevu, tworząc projekty
+        w Unity i eksperymentując z mechanikami gameplayu.
+      </p>
+      <div class="skills" style="margin-top: 20px">
+        <span class="skill">C#</span>
+        <span class="skill">Vue.js</span>
+        <span class="skill">React Native</span>
+        <span class="skill">Expo</span>
+        <span class="skill">JavaScript</span>
+        <span class="skill">TypeScript</span>
+        <span class="skill">TSQL</span>
+        <span class="skill">C++</span>
+        <span class="skill">Unity</span>
+        <span class="skill">Podstawy 3ds Max</span>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projekty</h2>
+      <div class="projects">
+        <article class="project">
+          <img src="./under-construction.jpg" alt="under-construction" />
+          <div class="project-body">
+            <h3>Platforma edukacyjno medyczna</h3>
+            <p class="muted">
+              Platforma edukacyjna w oparciu o C# EntityFramework i Vue.js.
+            </p>
+            <div class="tags">
+              <span class="tag">C#</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Vue.js</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <img src="./szachy/szachy.PNG" alt="szachy" />
+          <div class="project-body">
+            <h3>Szachy w C++</h3>
+            <p class="muted">
+              Autorski silnik szachowy w C++ - implementacja logiki gry od zera
+              z warstwą wizualną opartą na SFML. Kod dostępny na moim
+              <a
+                href="https://github.com/AleksanderJozwiak/ChessOOP"
+                target="_blank"
+                style="color: var(--accent); text-decoration: none"
+                >Githubie</a
+              >
+            </p>
+            <div class="tags">
+              <span class="tag">C++</span>
+              <span class="tag">SFML</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="images-container">
+            <img src="./drop/logo.jpg" alt="Logo" />
+            <img src="./drop/menu.jpg" alt="Menu" />
+            <img src="./drop/ingame.jpg" alt="InGame" />
+          </div>
+          <div class="project-body">
+            <h3>Gra w Mobilna Unity</h3>
+            <p class="muted">Pierwsza próba wydania pełnej gry na Sklep Play</p>
+            <div class="tags">
+              <span class="tag">Unity</span>
+              <span class="tag">C#</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <img src="./room-rumble/rumble.png" alt="room-rumble" />
+          <div class="project-body">
+            <h3>Gra w Unity</h3>
+            <p class="muted">
+              Projekt realizowany grupowo na potrzeby studiów - gra wykonana w
+              Unity z naciskiem na mechanikę i interaktywność. Gra dostępna jest
+              na
+              <a
+                href="https://aleksanderjozwiak.itch.io/room-rumble"
+                target="_blank"
+                style="color: var(--accent); text-decoration: none"
+                >itch.io</a
+              >
+            </p>
+            <div class="tags">
+              <span class="tag">Unity</span>
+              <span class="tag">C#</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <img
+            src="./3dsmax/Jóźwiak Aleksander - Latarnia.jpg"
+            alt="latarnia"
+          />
+          <div class="project-body">
+            <h3>Artystyczna latarnia</h3>
+            <p class="muted">
+              Projekt realizowany na potrzeby studiów, moja interpratacja
+              latarni
+            </p>
+            <div class="tags">
+              <span class="tag">3ds Max</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <img src="./3dsmax/Jóźwiak Aleksander - Wiadro.jpg" alt="wiadro" />
+          <div class="project-body">
+            <h3>Model wiadra</h3>
+            <p class="muted">
+              Projekt realizowany na potrzeby studiów, podstawowa wiedza o
+              modelowaniu 3D
+            </p>
+            <div class="tags">
+              <span class="tag">3ds Max</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <img src="./3dsmax/Jóźwiak Aleksander - Diorama.jpg" alt="Diorama" />
+          <div class="project-body">
+            <h3>Diorama</h3>
+            <p class="muted">
+              Projekt realizowany na potrzeby studiów, mój wybór padł kawałek
+              miasta
+            </p>
+            <div class="tags">
+              <span class="tag">3ds Max</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Kontakt</h2>
+      <div class="contact-info">
+        <div>
+          📧
+          <a
+            href="jozwiakaleksander@gmail.com"
+            style="color: var(--accent); text-decoration: none"
+            >jozwiakaleksander@gmail.com</a
+          >
+        </div>
+        <div>📱 +48 602 220 129</div>
+        <div>
+          🔗
+          <a
+            href="https://www.linkedin.com/in/aleksander-jóźwiak-2b4682234"
+            target="_blank"
+            style="color: var(--accent); text-decoration: none"
+            >LinkedIn</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer>© 2025 Aleksander Jóźwiak - Portfolio</footer>
+  </body>
+</html>
