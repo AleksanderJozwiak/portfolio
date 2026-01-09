@@ -58,6 +58,10 @@
         font-size: 22px;
         color: var(--accent);
       }
+      nav {
+        display: flex;
+        align-items: center;
+      }
       nav a {
         margin-left: 24px;
         text-decoration: none;
@@ -67,6 +71,39 @@
       }
       nav a:hover {
         color: var(--accent);
+      }
+
+      .lang-toggle {
+        margin-left: 24px;
+        background: var(--bg-alt);
+        border: 1px solid #333;
+        border-radius: 12px;
+        color: white;
+        padding: 6px 12px;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: 0.2s;
+      }
+      .lang-toggle:hover {
+        border-color: var(--accent);
+      }
+      .lang-flag {
+        padding: 0;
+        width: 25px;
+        height: 20px;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+      .flag {
+        border: 1px solid #333;
+        border-radius: 5px;
+        width: 25px;
+        height: 20px;
       }
 
       .hero {
@@ -272,6 +309,13 @@
         .modal-header-img {
           height: 200px;
         }
+        .hero {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .hero img {
+          order: -1;
+        }
       }
 
       .detail-item {
@@ -306,9 +350,17 @@
     <header>
       <div class="logo">AJ</div>
       <nav>
-        <a href="#about">O mnie</a>
-        <a href="#projects">Projekty</a>
-        <a href="#contact">Kontakt</a>
+        <a href="#about" data-i18n="nav-about">O mnie</a>
+        <a href="#projects" data-i18n="nav-projects">Projekty</a>
+        <a href="#contact" data-i18n="nav-contact">Kontakt</a>
+        <button class="lang-toggle" onclick="toggleLanguage()">
+          <span id="lang-flag" class="lang-flag"
+            ><img src="./flags/uk.gif" class="flag"
+          /></span>
+          <span id="lang-text" style="font-size: 14px; font-weight: 600"
+            >EN</span
+          >
+        </button>
       </nav>
     </header>
 
@@ -318,19 +370,22 @@
           Aleksander
           <div style="color: var(--accent)">Jóźwiak</div>
         </h1>
-        <p>
+        <p data-i18n="hero-p">
           Jestem fullstack developerem z doświadczeniem w C# oraz Vue.js, a
           także w tworzeniu aplikacji mobilnych z wykorzystaniem Expo i React
           Native. Tworzenie gier w Unity traktuję jako moją pasję, którą
           rozwijam równolegle.
         </p>
-        <a href="#projects" class="btn">Zobacz projekty</a>
+        <a href="#projects" class="btn" data-i18n="btn-projects"
+          >Zobacz projekty</a
+        >
         <br />
         <br />
         <a
           href="https://github.com/AleksanderJozwiak"
           target="_blank"
           class="btn"
+          data-i18n="btn-github"
           >Sprawdź Gita</a
         >
       </div>
@@ -338,8 +393,8 @@
     </section>
 
     <section id="about">
-      <h2>O mnie</h2>
-      <p>
+      <h2 data-i18n="about-h2">O mnie</h2>
+      <p data-i18n="about-p">
         Na co dzień zajmuję się projektowaniem i implementacją aplikacji
         webowych jako fullstack developer. W pracy korzystam głównie z C#,
         Vue.js oraz technologii frontendowych i backendowych. Mam również
@@ -366,8 +421,10 @@
 
     <section id="projects">
       <h2>
-        Projekty
-        <small style="font-size: 14px; font-weight: normal; color: var(--muted)"
+        <span data-i18n="projects-h2">Projekty</span>
+        <small
+          style="font-size: 14px; font-weight: normal; color: var(--muted)"
+          data-i18n="projects-small"
           >(Kliknij kafelek po szczegóły)</small
         >
       </h2>
@@ -375,7 +432,7 @@
     </section>
 
     <section id="contact">
-      <h2>Kontakt</h2>
+      <h2 data-i18n="contact-h2">Kontakt</h2>
       <div class="contact-info">
         <div>
           📧
@@ -389,7 +446,7 @@
       </div>
     </section>
 
-    <footer>© 2026 Aleksander Jóźwiak</footer>
+    <footer id="footer">© 2026 Aleksander Jóźwiak</footer>
 
     <div class="modal-overlay" id="modalOverlay">
       <div class="modal-container">
@@ -399,61 +456,152 @@
     </div>
 
     <script>
+      let currentLang = "pl";
+
+      const translations = {
+        pl: {
+          "nav-about": "O mnie",
+          "nav-projects": "Projekty",
+          "nav-contact": "Kontakt",
+          "hero-p":
+            "Jestem fullstack developerem z doświadczeniem w C# oraz Vue.js, a także w tworzeniu aplikacji mobilnych z wykorzystaniem Expo i React Native. Tworzenie gier w Unity traktuję jako moją pasję, którą rozwijam równolegle.",
+          "btn-projects": "Zobacz projekty",
+          "btn-github": "Sprawdź Gita",
+          "about-h2": "O mnie",
+          "about-p":
+            "Na co dzień zajmuję się projektowaniem i implementacją aplikacji webowych jako fullstack developer. W pracy korzystam głównie z C#, Vue.js oraz technologii frontendowych i backendowych. Mam również doświadczenie w budowie aplikacji mobilnych opartych o Expo React Native. Po godzinach rozwijam swoją pasję do gamedevu, tworząc projekty w Unity i eksperymentując z mechanikami gameplayu.",
+          "projects-h2": "Projekty",
+          "projects-small": "(Kliknij kafelek po szczegóły)",
+          "contact-h2": "Kontakt",
+          "modal-about": "O projekcie",
+          "modal-challenges": "Wyzwania",
+          "modal-tech": "Technologie",
+          "modal-features": "Funkcje",
+        },
+        en: {
+          "nav-about": "About",
+          "nav-projects": "Projects",
+          "nav-contact": "Contact",
+          "hero-p":
+            "I am a fullstack developer with experience in C# and Vue.js, as well as in creating mobile applications using Expo and React Native. I treat game development in Unity as a passion that I develop in parallel.",
+          "btn-projects": "View Projects",
+          "btn-github": "Check GitHub",
+          "about-h2": "About Me",
+          "about-p":
+            "Every day, I design and implement web applications as a fullstack developer. In my work, I mainly use C#, Vue.js, and both frontend and backend technologies. I also have experience in building mobile applications based on Expo React Native. After hours, I pursue my passion for gamedev by creating projects in Unity and experimenting with gameplay mechanics.",
+          "projects-h2": "Projects",
+          "projects-small": "(Click tile for details)",
+          "contact-h2": "Contact",
+          "modal-about": "About Project",
+          "modal-challenges": "Challenges",
+          "modal-tech": "Technologies",
+          "modal-features": "Features",
+        },
+      };
+
       const projectsData = [
         {
           id: 1,
-          title: "Platforma edukacyjno medyczna",
-          shortDesc:
+          title_pl: "Platforma edukacyjno medyczna",
+          title_en: "Medical Education Platform",
+          shortDesc_pl:
             "Platforma edukacyjna w oparciu o C# EntityFramework i Vue.js",
-          fullDesc:
+          shortDesc_en:
+            "Education platform based on C#, Entity Framework and Vue.js",
+          fullDesc_pl:
             "Kompleksowy system zarządzania kursami medycznymi. Zaimplementowałem pełną architekturę od bazy danych po interfejs użytkownika.",
+          fullDesc_en:
+            "Comprehensive system for managing medical courses. I implemented the full architecture from database to user interface.",
           image: "./under-construction.jpg",
           tags: ["C#", "SQL", "Vue.js"],
-          features: ["System ról", "Integracja EF Core", "Integracja Stripe"],
-          challenges:
-            "Zapewnienie bezpieczeństwa wrażliwych danych użytkownika. Stworzenie systemu subskrypcji",
+          features_pl: [
+            "System ról",
+            "Integracja EF Core",
+            "Integracja Stripe",
+          ],
+          features_en: [
+            "Role system",
+            "EF Core integration",
+            "Stripe integration",
+          ],
+          challenges_pl:
+            "Zapewnienie bezpieczeństwa wrażliwych danych użytkownika. Stworzenie systemu subskrypcji.",
+          challenges_en:
+            "Ensuring security of sensitive user data. Creating a subscription system.",
         },
         {
           id: 2,
-          title: "Soror",
-          shortDesc: "Dynamiczny boss rush, 1hp souslike",
-          fullDesc:
-            "Projekt skupiony na 'game feelu' i precyzji sterowania. Zaimplementowałem wszystkie mechaniki gracza oraz byłem również odpowiedzialny za warstwę audio wprowadzoną do gry",
+          title_pl: "Soror",
+          title_en: "Soror",
+          shortDesc_pl: "Dynamiczny boss rush, 1hp souslike",
+          shortDesc_en: "Dynamic boss rush, 1hp soulslike",
+          fullDesc_pl:
+            "Projekt skupiony na 'game feelu' i precyzji sterowania. Zaimplementowałem wszystkie mechaniki gracza oraz byłem również odpowiedzialny za warstwę audio wprowadzoną do gry.",
+          fullDesc_en:
+            "Project focused on 'game feel' and control precision. I implemented all player mechanics and was also responsible for the audio layer introduced into the game.",
           image: "./soror/wip.png",
           tags: ["C#", "Unity"],
-          features: ["Custom movement", "Player input system", "Hitbox system"],
-          challenges:
+          features_pl: [
+            "Custom movement",
+            "Player input system",
+            "Hitbox system",
+          ],
+          features_en: [
+            "Custom movement",
+            "Player input system",
+            "Hitbox system",
+          ],
+          challenges_pl:
             "Optymalizacja detekcji kolizji. System kierunkowego blokowania ataków przeciwnika. Obsługa kontrolera oraz klawiatury i myszy.",
+          challenges_en:
+            "Collision detection optimization. Directional blocking system. Support for controller, keyboard, and mouse.",
         },
         {
           id: 3,
-          title: "Spacetaker",
-          shortDesc: "Gra multiplayer z obsługą Steam",
-          fullDesc:
+          title_pl: "Spacetaker",
+          title_en: "Spacetaker",
+          shortDesc_pl: "Gra multiplayer z obsługą Steam",
+          shortDesc_en: "Multiplayer game with Steam support",
+          fullDesc_pl:
             "Sieciowa strzelanka w kosmosie. Odpowiadałem za integrację ze Steamworks.NET oraz cały netcode.",
+          fullDesc_en:
+            "Online space shooter. I was responsible for Steamworks.NET integration and the entire netcode.",
           image: "./spacetaker/spacetaker.jpg",
           tags: ["C#", "Unity"],
-          features: ["Steam Lobbies", "Network Sync"],
-          challenges:
+          features_pl: ["Steam Lobbies", "Network Sync"],
+          features_en: ["Steam Lobbies", "Network Sync"],
+          challenges_pl:
             "Synchronizacja pozycji graczy przy wysokich prędkościach w kosmosie.",
+          challenges_en: "Syncing player positions at high speeds in space.",
         },
         {
           id: 4,
-          title: "Szachy w C++",
-          shortDesc: "Autorski silnik szachowy w C++ i SFML",
-          fullDesc:
+          title_pl: "Szachy w C++",
+          title_en: "Chess in C++",
+          shortDesc_pl: "Autorski silnik szachowy w C++ i SFML",
+          shortDesc_en: "Custom chess engine in C++ and SFML",
+          fullDesc_pl:
             "Projekt skupiony na logice obiektowej i algorytmach. Cała logika gry napisana od zera bez użycia gotowych silników.",
+          fullDesc_en:
+            "Project focused on object-oriented logic and algorithms. Entire game logic written from scratch without using ready-made engines.",
           image: "./szachy/szachy.PNG",
           tags: ["C++", "SFML"],
-          features: ["Legal move validation", "Castling/En passant"],
-          challenges: "Złożoność algorytmu sprawdzającego stan mata i pata.",
+          features_pl: ["Walidacja ruchów", "Roszada/En passant"],
+          features_en: ["Move validation", "Castling/En passant"],
+          challenges_pl: "Złożoność algorytmu sprawdzającego stan mata i pata.",
+          challenges_en:
+            "Complexity of the checkmate and stalemate detection algorithm.",
         },
         {
           id: 5,
-          title: "drOp!",
-          shortDesc: "Zręcznościowa gra mobilna na Sklep Play",
-          fullDesc:
+          title_pl: "drOp!",
+          title_en: "drOp!",
+          shortDesc_pl: "Zręcznościowa gra mobilna na Sklep Play",
+          shortDesc_en: "Arcade mobile game on Play Store",
+          fullDesc_pl:
             "Gra mobilna wydana na platformę Android. Przeszła pełny proces od pomysłu do publikacji.",
+          fullDesc_en:
+            "Mobile game released on the Android platform. Went through the full process from concept to publication.",
           image: "./drop/main.jpg",
           isMultiImage: true,
           descriptionImages: [
@@ -462,104 +610,163 @@
             "./drop/ingame.jpg",
           ],
           tags: ["Unity", "C#"],
-          features: ["Google Ads", "Mobile UI", "Developer Console"],
-          challenges:
+          features_pl: ["Google Ads", "Mobile UI", "Developer Console"],
+          features_en: ["Google Ads", "Mobile UI", "Developer Console"],
+          challenges_pl:
             "Dostosowanie wydajności pod szeroką gamę urządzeń mobilnych.",
+          challenges_en:
+            "Adapting performance for a wide range of mobile devices.",
         },
         {
           id: 6,
-          title: "Where's my remote",
-          shortDesc: "Poszukiwania pilota w wirtualnym świecie",
-          fullDesc:
+          title_pl: "Where's my remote",
+          title_en: "Where's my remote",
+          shortDesc_pl: "Poszukiwania pilota w wirtualnym świecie",
+          shortDesc_en: "Searching for the remote in a virtual world",
+          fullDesc_pl:
             "Eksperyment z rozszerzoną rzeczywistością. Prosta gra wymagająca od gracza poszukiwania pilota na czas zanim rozpocznie się jego ulubiony program. Zaimplementowałem win/lose condition.",
+          fullDesc_en:
+            "Virtual reality experiment. Simple game requiring player to find the remote before their favorite show starts. Implemented win/lose conditions.",
           image: "./remote/remote.png",
           tags: ["VR", "Unity", "C#"],
-          features: ["Virtual Reality"],
-          challenges: "Obsługa kontrolerów od VR",
+          features_pl: ["Rzeczywistość wirtualna"],
+          features_en: ["Virtual Reality"],
+          challenges_pl: "Obsługa kontrolerów od VR",
+          challenges_en: "VR controller support",
         },
         {
           id: 7,
-          title: "Room Rumble",
-          shortDesc: "FPS rogue-lite z proceduralną generacją",
-          fullDesc:
+          title_pl: "Room Rumble",
+          title_en: "Room Rumble",
+          shortDesc_pl: "FPS rogue-lite z proceduralną generacją",
+          shortDesc_en: "FPS rogue-lite with procedural generation",
+          fullDesc_pl:
             "Eksperyment z algorytmami generowania lochów. Każda rozgrywka oferuje inny układ pomieszczeń.",
+          fullDesc_en:
+            "Experiment with dungeon generation algorithms. Every playthrough offers a different room layout.",
           image: "./room-rumble/rumble.png",
           tags: ["Unity", "C#"],
-          features: ["Procedural Dungeon Generator", "AI Navigation"],
-          challenges:
+          features_pl: ["Proceduralny generator lochów", "AI Navigation"],
+          features_en: ["Procedural Dungeon Generator", "AI Navigation"],
+          challenges_pl:
             "Stworzenie algorytmu generującego mapy, które zawsze są możliwe do ukończenia.",
+          challenges_en:
+            "Creating an algorithm that generates maps that are always finishable.",
         },
         {
           id: 8,
-          title: "Prototyp gry Hack & Slash",
-          shortDesc: "System walki i niszczalne otoczenie",
-          fullDesc:
+          title_pl: "Prototyp gry Hack & Slash",
+          title_en: "Hack & Slash Prototype",
+          shortDesc_pl: "System walki i niszczalne otoczenie",
+          shortDesc_en: "Combat system and destructible environment",
+          fullDesc_pl:
             "Skupienie na soczystym systemie walki. Prototyp prezentuje system combo oraz efekty cząsteczkowe przy atakach.",
+          fullDesc_en:
+            "Focus on 'juicy' combat system. Prototype showcases combo system and particle effects during attacks.",
           image: "./under-construction.jpg",
           tags: ["C#", "Unity"],
-          features: ["Combo System", "Destructibles", "VFX"],
-          challenges: "Balansowanie animacji i 'impactu' każdego uderzenia.",
+          features_pl: ["System Combo", "Zniszczalne obiekty", "VFX"],
+          features_en: ["Combo System", "Destructibles", "VFX"],
+          challenges_pl: "Balansowanie animacji i 'impactu' każdego uderzenia.",
+          challenges_en: "Balancing animations and the 'impact' of every hit.",
         },
         {
           id: 9,
-          title: "Prototyp gry RTS",
-          shortDesc: "Zaznaczanie jednostek i budowanie bazy",
-          fullDesc:
+          title_pl: "Prototyp gry RTS",
+          title_en: "RTS Game Prototype",
+          shortDesc_pl: "Zaznaczanie jednostek i system walki",
+          shortDesc_en: "Selecting units and combat system",
+          fullDesc_pl:
             "Klasyczny RTS z systemem wydawania rozkazów grupowych i zarządzania zasobami.",
+          fullDesc_en:
+            "A classic RTS with a group command system and resource management.",
           image: "./under-construction.jpg",
           tags: ["C#", "Unity"],
-          features: ["Box Selection", "NavMesh Units"],
-          challenges:
+          features_pl: ["Box Selection", "NavMesh Units"],
+          features_en: ["Box Selection", "NavMesh Units"],
+          challenges_pl:
             "Zarządzanie ścieżkami wielu jednostek jednocześnie (Avoidance).",
+          challenges_en:
+            "Managing the paths of multiple units simultaneously (Avoidance).",
         },
         {
           id: 10,
-          title: "Kanion w klimatach dzikiego zachodu",
-          shortDesc: "Level design w Unreal Engine 5",
-          fullDesc:
+          title_pl: "Kanion w klimatach dzikiego zachodu",
+          title_en: "A canyon with a Wild West atmosphere",
+          shortDesc_pl: "Level design w Unreal Engine 5",
+          shortDesc_en: "Level design in Unreal Engine 5",
+          fullDesc_pl:
             "Projekt artystyczny wykorzystujący technologie dostępne w silniku Unreal Engine 5. Skupienie na kompozycji krajobrazu.",
+          fullDesc_en:
+            "An artistic project utilizing technologies available in the Unreal Engine 5. Focus on landscape composition.",
           image: "./ue5/level.png",
           tags: ["Unreal Engine"],
-          features: ["Landscape sculpting"],
-          challenges: "Dopracowanie klimatu w stylu dzikiego zachodu.",
+          features_pl: ["Rzeźbienie krajobrazu"],
+          features_en: ["Landscape sculpting"],
+          challenges_pl: "Dopracowanie klimatu w stylu dzikiego zachodu.",
+          challenges_en: "Refining the Wild West atmosphere.",
         },
         {
           id: 11,
-          title: "Wiadro",
-          shortDesc: "Projekt realizowany na potrzeby studiów, modelowanie 3D",
-          fullDesc:
+          title_pl: "Wiadro",
+          title_en: "Bucket",
+          shortDesc_pl:
+            "Projekt realizowany na potrzeby studiów, modelowanie 3D",
+          shortDesc_en: "University project, 3D modeling",
+          fullDesc_pl:
             "Nauka podstaw modelowania obiektów typu Hard Surface. Skupiłem się na prawidłowej topologii i teksturach.",
+          fullDesc_en:
+            "Learning basics of Hard Surface modeling. Focused on correct topology and textures.",
           image: "./3dsmax/Jóźwiak Aleksander - Wiadro.jpg",
           tags: ["3ds Max"],
-          features: ["Prawidłowa topologia"],
-          challenges: "Poznanie możliwości programu 3ds Max.",
+          features_pl: ["Prawidłowa topologia"],
+          features_en: ["Correct topology"],
+          challenges_pl: "Poznanie możliwości programu 3ds Max.",
+          challenges_en: "Learning the features of 3ds Max.",
         },
         {
           id: 12,
-          title: "Diorama",
-          shortDesc: "Kawałek miasta wykonany w 3ds Max",
-          fullDesc:
+          title_pl: "Diorama",
+          title_en: "Diorama",
+          shortDesc_pl: "Kawałek miasta wykonany w 3ds Max",
+          shortDesc_en: "A piece of the city created in 3ds Max",
+          fullDesc_pl:
             "Złożony projekt sceny miejskiej. Składa się z wielu modułowych elementów, które tworzą spójną całość.",
+          fullDesc_en:
+            "A complex urban scene design. It consists of many modular elements that form a coherent whole.",
           image: "./3dsmax/Jóźwiak Aleksander - Diorama.jpg",
           tags: ["3ds Max"],
-          features: [
+          features_pl: [
+            "Konstrukcja modułowa",
+            "Oświetlenie sceniczne",
+            "Złożona kompozycja",
+          ],
+          features_en: [
             "Modular design",
             "Scenery lighting",
             "Complex composition",
           ],
-          challenges: "Optymalizacja sceny przy dużej liczbie poligonów.",
+          challenges_pl: "Optymalizacja sceny przy dużej liczbie poligonów.",
+          challenges_en:
+            "Optimization of scenes with a large number of polygons.",
         },
         {
           id: 13,
-          title: "Artystyczna latarnia",
-          shortDesc: "Interpretacja latarni, modelowanie 3D",
-          fullDesc:
+          title_pl: "Artystyczna latarnia",
+          title_en: "Artistic lantern",
+          shortDesc_pl: "Moja interpretacja latarni miejskiej",
+          shortDesc_en: "My interpretation of a city streetlight",
+          fullDesc_pl:
             "Zaawansowany model latarni z dużą dbałością o detal. Projekt zaliczeniowy z modelowania 3D.",
+          fullDesc_en:
+            "An advanced model of a city streetlight with great attention to detail. A final project in 3D modeling.",
           image: "./3dsmax/Jóźwiak Aleksander - Latarnia.jpg",
           tags: ["3ds Max"],
-          features: ["Stylized look"],
-          challenges:
+          features_pl: ["Stylizowany wygląd"],
+          features_en: ["Stylized look"],
+          challenges_pl:
             "Modelowanie skomplikowanych, zaokrąglonych elementów dekoracyjnych.",
+          challenges_en: "Modeling complex, rounded decorative elements.",
         },
       ];
 
@@ -567,19 +774,35 @@
       const overlay = document.getElementById("modalOverlay");
       const content = document.getElementById("modalContent");
 
+      function toggleLanguage() {
+        currentLang = currentLang === "pl" ? "en" : "pl";
+
+        // Update UI text
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          el.innerText = translations[currentLang][key];
+        });
+
+        // Update flag toggle button
+        document.getElementById("lang-flag").innerHTML =
+          currentLang === "pl"
+            ? `<img src="./flags/uk.gif" class="flag">`
+            : `<img src="./flags/pl.gif" class="flag">`;
+        document.getElementById("lang-text").innerText =
+          currentLang === "pl" ? "EN" : "PL";
+
+        render();
+      }
+
       function render() {
         grid.innerHTML = projectsData
           .map(
             (p) => `
           <div class="project" onclick="openM(${p.id})">
-            <img src="${
-              p.image
-            }" onerror="this.src='https://via.placeholder.com/400x250/222/ff8800?text=${encodeURIComponent(
-              p.title
-            )}'">
+            <img src="${p.image}">
             <div class="project-body">
-              <h3>${p.title}</h3>
-              <p>${p.shortDesc}</p>
+              <h3>${p["title_" + currentLang]}</h3>
+              <p>${p["shortDesc_" + currentLang]}</p>
               <div class="tags">${p.tags
                 .map((t) => `<span class="tag">${t}</span>`)
                 .join("")}</div>
@@ -592,33 +815,34 @@
 
       window.openM = (id) => {
         const p = projectsData.find((x) => x.id === id);
+        const trans = translations[currentLang];
+
         content.innerHTML = `
         ${
           p.isMultiImage
             ? `<div class="images-container modal-header-img">${p.descriptionImages
-                .map(
-                  (i) =>
-                    `<img src="${i}" onerror="this.src='https://via.placeholder.com/150x150/222/ff8800?text=3D'">`
-                )
+                .map((i) => `<img src="${i}">`)
                 .join("")}</div>`
-            : `<img class="modal-header-img" src="${
-                p.image
-              }" onerror="this.src='https://via.placeholder.com/400x250/222/ff8800?text=${encodeURIComponent(
-                p.title
-              )}'">`
+            : `<img class="modal-header-img" src="${p.image}">`
         }
           <div class="modal-grid">
             <div>
-              <h4>O projekcie</h4><p>${p.fullDesc}</p><br>
-              <h4>Wyzwania</h4><p>${p.challenges}</p>
+              <h4>${trans["modal-about"]}</h4><p>${
+          p["fullDesc_" + currentLang]
+        }</p><br>
+              <h4>${trans["modal-challenges"]}</h4><p>${
+          p["challenges_" + currentLang]
+        }</p>
             </div>
             <div>
-              <h4>Technologie</h4><div class="tags">${p.tags
-                .map((t) => `<span class="tag">${t}</span>`)
-                .join("")}</div><br>
-              <h4>Funkcje</h4><ul>${p.features
-                .map((f) => `<li>${f}</li>`)
-                .join("")}</ul>
+              <h4>${trans["modal-tech"]}</h4><div class="tags">${p.tags
+          .map((t) => `<span class="tag">${t}</span>`)
+          .join("")}</div><br>
+              <h4>${trans["modal-features"]}</h4><ul>${p[
+          "features_" + currentLang
+        ]
+          .map((f) => `<li>${f}</li>`)
+          .join("")}</ul>
             </div>
           </div>
         `;
