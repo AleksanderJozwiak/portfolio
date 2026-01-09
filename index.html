@@ -17,6 +17,7 @@
         --muted: #b3b3b3;
         --radius: 18px;
         --max: 1200px;
+        --overlay: rgba(0, 0, 0, 0.85);
       }
 
       * {
@@ -32,6 +33,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow-x: hidden;
+      }
+
+      body.modal-open {
+        overflow: hidden;
       }
 
       header {
@@ -93,9 +99,12 @@
         background: var(--accent);
         color: white;
         transition: 0.2s;
+        border: none;
+        cursor: pointer;
       }
       .btn:hover {
         opacity: 0.85;
+        transform: translateY(-2px);
       }
 
       section {
@@ -123,7 +132,7 @@
 
       .projects {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 24px;
       }
       .project {
@@ -132,68 +141,164 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        transition: transform 0.2s;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        border: 1px solid transparent;
+        height: 100%;
       }
       .project:hover {
-        transform: translateY(-6px);
+        transform: translateY(-8px);
+        border-color: var(--accent);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+      .project img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
       }
       .images-container {
         margin-top: 10px;
         display: flex;
         justify-content: center;
         gap: 10px;
-        flex-shrink: 0;
+        height: 190px;
+        padding: 10px;
       }
       .images-container img {
-        max-width: 30%;
+        width: 30%;
+        height: 100%;
         object-fit: cover;
         border-radius: 8px;
-        border: 2px dashed black;
+        border: 1px solid #333;
       }
       .project-body {
-        padding: 18px;
+        padding: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
       }
       .project-body h3 {
-        margin-bottom: 8px;
+        margin-bottom: 10px;
+        color: var(--accent);
+      }
+      .project-body p {
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 15px;
       }
       .tags {
-        margin-top: 8px;
+        margin-top: auto;
         display: flex;
         gap: 8px;
         flex-wrap: wrap;
       }
       .tag {
         background: #222;
-        padding: 6px 10px;
-        border-radius: 10px;
-        font-size: 13px;
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-size: 12px;
         color: var(--muted);
+      }
+
+      /* MODAL STYLES */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--overlay);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        padding: 20px;
+        backdrop-filter: blur(6px);
+      }
+
+      .modal-container {
+        background: var(--bg-alt);
+        max-width: 900px;
+        width: 100%;
+        max-height: 90vh;
+        border-radius: var(--radius);
+        position: relative;
+        overflow-y: auto;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        border: 1px solid #333;
+      }
+
+      .modal-close {
+        position: sticky;
+        top: 20px;
+        float: right;
+        margin-right: 20px;
+        background: #222;
+        border: none;
+        color: var(--text);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+      }
+
+      .modal-content {
+        padding: 40px;
+      }
+
+      .modal-header-img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 30px;
+      }
+
+      .modal-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 40px;
+      }
+
+      @media (max-width: 768px) {
+        .modal-grid {
+          grid-template-columns: 1fr;
+        }
+        .modal-header-img {
+          height: 200px;
+        }
+      }
+
+      .detail-item {
+        margin-bottom: 25px;
+      }
+
+      .detail-item h4 {
+        color: var(--accent);
+        text-transform: uppercase;
+        font-size: 13px;
+        margin-bottom: 10px;
       }
 
       .contact-info {
         display: grid;
-        gap: 10px;
+        gap: 15px;
         font-size: 16px;
         color: var(--muted);
       }
 
       footer {
         margin-top: 60px;
-        padding: 20px;
+        padding: 30px;
         text-align: center;
         color: var(--muted);
-        font-size: 14px;
         border-top: 1px solid #222;
         width: 100%;
-      }
-
-      @media (max-width: 800px) {
-        .hero {
-          grid-template-columns: 1fr;
-        }
-        .hero h1 {
-          font-size: 36px;
-        }
       }
     </style>
   </head>
@@ -259,228 +364,274 @@
       </div>
     </section>
 
-    <!-- Dodać on click dla kafelków i szczegółowy opis co robiłem + dodatkowe screeny 
-     uspójnić tytuły projektów, wyrównać ilość testktu w opisie
-     opis bardziej "co to jest - co w tym robiłem" -->
     <section id="projects">
-      <h2>Projekty</h2>
-      <div class="projects">
-        <article class="project">
-          <img src="./under-construction.jpg" alt="under-construction" />
-          <div class="project-body">
-            <h3>Platforma edukacyjno medyczna</h3>
-            <p class="muted">
-              Platforma edukacyjna w oparciu o C# EntityFramework i Vue.js -
-              pełna implementacja wykonana przeze mnie
-            </p>
-            <div class="tags">
-              <span class="tag">C#</span>
-              <span class="tag">SQL</span>
-              <span class="tag">Vue.js</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img src="./under-construction.jpg" alt="under-construction" />
-          <div class="project-body">
-            <h3>Soror</h3>
-            <p class="muted">
-              Dynamiczny boss rush, 1hp souslike - zaprogramowałem pełen
-              movement postaci oraz brałem czynny udział w rozwoju projektu
-            </p>
-            <div class="tags">
-              <span class="tag">C#</span>
-              <span class="tag">Unity</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img src="./spacetaker/spacetaker.jpg" alt="spacetaker" />
-          <div class="project-body">
-            <h3>Spacetaker</h3>
-            <p class="muted">
-              Dynamiczna gry multiplayer wykonana w grupie na potrzeby studiów -
-              zaimplementowałem obłsugę Steam oraz - gra nadal w produkcji!
-            </p>
-            <div class="tags">
-              <span class="tag">C#</span>
-              <span class="tag">Unity</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img src="./szachy/szachy.PNG" alt="szachy" />
-          <div class="project-body">
-            <h3>Szachy w C++</h3>
-            <p class="muted">
-              Autorski silnik szachowy w C++ - implementacja logiki gry od zera
-              z warstwą wizualną opartą na SFML. Kod dostępny na moim
-              <a
-                href="https://github.com/AleksanderJozwiak/ChessOOP"
-                target="_blank"
-                style="color: var(--accent); text-decoration: none"
-                >Githubie</a
-              >
-            </p>
-            <div class="tags">
-              <span class="tag">C++</span>
-              <span class="tag">SFML</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <div class="images-container">
-            <img src="./drop/logo.jpg" alt="Logo" />
-            <img src="./drop/menu.jpg" alt="Menu" />
-            <img src="./drop/ingame.jpg" alt="InGame" />
-          </div>
-          <div class="project-body">
-            <h3>drOp!</h3>
-            <p class="muted">
-              Zręcznościowa gra mobilna - obsługa Google Ads, była wydana na
-              Sklepie Play
-            </p>
-            <div class="tags">
-              <span class="tag">Unity</span>
-              <span class="tag">C#</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img src="./room-rumble/rumble.png" alt="room-rumble" />
-          <div class="project-body">
-            <h3>Room Rumble</h3>
-            <p class="muted">
-              Gra akcji - gra wykonana w Unity z naciskiem na procedularne
-              generowanie pomieszczeń. Gra dostępna jest na
-              <a
-                href="https://aleksanderjozwiak.itch.io/room-rumble"
-                target="_blank"
-                style="color: var(--accent); text-decoration: none"
-                >itch.io</a
-              >
-            </p>
-            <div class="tags">
-              <span class="tag">Unity</span>
-              <span class="tag">C#</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img src="./under-construction.jpg" alt="under-construction" />
-          <div class="project-body">
-            <h3>Prototyp gry Hack & Slash</h3>
-            <p class="muted">Prototyp gry typu Hack & Slash</p>
-            <div class="tags">
-              <span class="tag">C#</span>
-              <span class="tag">Unity</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img src="./under-construction.jpg" alt="under-construction" />
-          <div class="project-body">
-            <h3>Prototyp gry RTS</h3>
-            <p class="muted">Prototyp gry typu real-time strategy</p>
-            <div class="tags">
-              <span class="tag">C#</span>
-              <span class="tag">Unity</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img src="./ue5/level.png" alt="" />
-          <div class="project-body">
-            <h3>Kanion w klimatach dzikiego zachodu</h3>
-            <p class="muted">
-              Level design w całośći wykonany przy użyciu silnika Unreal Engine
-              5
-            </p>
-            <div class="tags">
-              <span class="tag">Unreal Engine</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img
-            src="./3dsmax/Jóźwiak Aleksander - Latarnia.jpg"
-            alt="latarnia"
-          />
-          <div class="project-body">
-            <h3>Artystyczna latarnia</h3>
-            <p class="muted">
-              Projekt realizowany na potrzeby studiów, moja interpratacja
-              latarni
-            </p>
-            <div class="tags">
-              <span class="tag">3ds Max</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img src="./3dsmax/Jóźwiak Aleksander - Wiadro.jpg" alt="wiadro" />
-          <div class="project-body">
-            <h3>Model wiadra</h3>
-            <p class="muted">
-              Projekt realizowany na potrzeby studiów, podstawowa wiedza o
-              modelowaniu 3D
-            </p>
-            <div class="tags">
-              <span class="tag">3ds Max</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <img src="./3dsmax/Jóźwiak Aleksander - Diorama.jpg" alt="Diorama" />
-          <div class="project-body">
-            <h3>Diorama</h3>
-            <p class="muted">
-              Projekt realizowany na potrzeby studiów, mój wybór padł kawałek
-              miasta
-            </p>
-            <div class="tags">
-              <span class="tag">3ds Max</span>
-            </div>
-          </div>
-        </article>
-      </div>
+      <h2>
+        Projekty
+        <small style="font-size: 14px; font-weight: normal; color: var(--muted)"
+          >(Kliknij kafelek po szczegóły)</small
+        >
+      </h2>
+      <div class="projects" id="projects-grid"></div>
     </section>
 
-    <section id="contact" class="contact">
+    <section id="contact">
       <h2>Kontakt</h2>
       <div class="contact-info">
         <div>
           📧
           <a
-            href="jozwiakaleksander@gmail.com"
+            href="mailto:jozwiakaleksander@gmail.com"
             style="color: var(--accent); text-decoration: none"
             >jozwiakaleksander@gmail.com</a
           >
         </div>
         <div>📱 +48 602 220 129</div>
-        <div>
-          🔗
-          <a
-            href="https://www.linkedin.com/in/aleksander-jóźwiak-2b4682234"
-            target="_blank"
-            style="color: var(--accent); text-decoration: none"
-            >LinkedIn</a
-          >
-        </div>
       </div>
     </section>
 
-    <footer>© 2025 Aleksander Jóźwiak - Portfolio</footer>
+    <footer>© 2026 Aleksander Jóźwiak</footer>
+
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-container">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div class="modal-content" id="modalContent"></div>
+      </div>
+    </div>
+
+    <script>
+      const projectsData = [
+        {
+          id: 1,
+          title: "Platforma edukacyjno medyczna",
+          shortDesc:
+            "Platforma edukacyjna w oparciu o C# EntityFramework i Vue.js",
+          fullDesc:
+            "Kompleksowy system zarządzania kursami medycznymi. Zaimplementowałem pełną architekturę od bazy danych po interfejs użytkownika.",
+          image: "./under-construction.jpg",
+          tags: ["C#", "SQL", "Vue.js"],
+          features: ["System ról", "Integracja EF Core", "Integracja Stripe"],
+          challenges:
+            "Zapewnienie bezpieczeństwa wrażliwych danych użytkownika. Stworzenie systemu subskrypcji",
+        },
+        {
+          id: 2,
+          title: "Soror",
+          shortDesc: "Dynamiczny boss rush, 1hp souslike",
+          fullDesc:
+            "Projekt skupiony na 'game feelu' i precyzji sterowania. Zaimplementowałem wszystkie mechaniki gracza oraz byłem również odpowiedzialny za warstwę audio wprowadzoną do gry",
+          image: "./soror/wip.png",
+          tags: ["C#", "Unity"],
+          features: ["Custom movement", "Player input system", "Hitbox system"],
+          challenges:
+            "Optymalizacja detekcji kolizji. System kierunkowego blokowania ataków przeciwnika. Obsługa kontrolera oraz klawiatury i myszy.",
+        },
+        {
+          id: 3,
+          title: "Spacetaker",
+          shortDesc: "Gra multiplayer z obsługą Steam",
+          fullDesc:
+            "Sieciowa strzelanka w kosmosie. Odpowiadałem za integrację ze Steamworks.NET oraz cały netcode.",
+          image: "./spacetaker/spacetaker.jpg",
+          tags: ["C#", "Unity"],
+          features: ["Steam Lobbies", "Network Sync"],
+          challenges:
+            "Synchronizacja pozycji graczy przy wysokich prędkościach w kosmosie.",
+        },
+        {
+          id: 4,
+          title: "Szachy w C++",
+          shortDesc: "Autorski silnik szachowy w C++ i SFML",
+          fullDesc:
+            "Projekt skupiony na logice obiektowej i algorytmach. Cała logika gry napisana od zera bez użycia gotowych silników.",
+          image: "./szachy/szachy.PNG",
+          tags: ["C++", "SFML"],
+          features: ["Legal move validation", "Castling/En passant"],
+          challenges: "Złożoność algorytmu sprawdzającego stan mata i pata.",
+        },
+        {
+          id: 5,
+          title: "drOp!",
+          shortDesc: "Zręcznościowa gra mobilna na Sklep Play",
+          fullDesc:
+            "Gra mobilna wydana na platformę Android. Przeszła pełny proces od pomysłu do publikacji.",
+          image: "./drop/main.jpg",
+          isMultiImage: true,
+          descriptionImages: [
+            "./drop/logo.jpg",
+            "./drop/menu.jpg",
+            "./drop/ingame.jpg",
+          ],
+          tags: ["Unity", "C#"],
+          features: ["Google Ads", "Mobile UI", "Developer Console"],
+          challenges:
+            "Dostosowanie wydajności pod szeroką gamę urządzeń mobilnych.",
+        },
+        {
+          id: 6,
+          title: "Where's my remote",
+          shortDesc: "Poszukiwania pilota w wirtualnym świecie",
+          fullDesc:
+            "Eksperyment z rozszerzoną rzeczywistością. Prosta gra wymagająca od gracza poszukiwania pilota na czas zanim rozpocznie się jego ulubiony program. Zaimplementowałem win/lose condition.",
+          image: "./remote/remote.png",
+          tags: ["VR", "Unity", "C#"],
+          features: ["Virtual Reality"],
+          challenges: "Obsługa kontrolerów od VR",
+        },
+        {
+          id: 7,
+          title: "Room Rumble",
+          shortDesc: "FPS rogue-lite z proceduralną generacją",
+          fullDesc:
+            "Eksperyment z algorytmami generowania lochów. Każda rozgrywka oferuje inny układ pomieszczeń.",
+          image: "./room-rumble/rumble.png",
+          tags: ["Unity", "C#"],
+          features: ["Procedural Dungeon Generator", "AI Navigation"],
+          challenges:
+            "Stworzenie algorytmu generującego mapy, które zawsze są możliwe do ukończenia.",
+        },
+        {
+          id: 8,
+          title: "Prototyp gry Hack & Slash",
+          shortDesc: "System walki i niszczalne otoczenie",
+          fullDesc:
+            "Skupienie na soczystym systemie walki. Prototyp prezentuje system combo oraz efekty cząsteczkowe przy atakach.",
+          image: "./under-construction.jpg",
+          tags: ["C#", "Unity"],
+          features: ["Combo System", "Destructibles", "VFX"],
+          challenges: "Balansowanie animacji i 'impactu' każdego uderzenia.",
+        },
+        {
+          id: 9,
+          title: "Prototyp gry RTS",
+          shortDesc: "Zaznaczanie jednostek i budowanie bazy",
+          fullDesc:
+            "Klasyczny RTS z systemem wydawania rozkazów grupowych i zarządzania zasobami.",
+          image: "./under-construction.jpg",
+          tags: ["C#", "Unity"],
+          features: ["Box Selection", "NavMesh Units"],
+          challenges:
+            "Zarządzanie ścieżkami wielu jednostek jednocześnie (Avoidance).",
+        },
+        {
+          id: 10,
+          title: "Kanion w klimatach dzikiego zachodu",
+          shortDesc: "Level design w Unreal Engine 5",
+          fullDesc:
+            "Projekt artystyczny wykorzystujący technologie dostępne w silniku Unreal Engine 5. Skupienie na kompozycji krajobrazu.",
+          image: "./ue5/level.png",
+          tags: ["Unreal Engine"],
+          features: ["Landscape sculpting"],
+          challenges: "Dopracowanie klimatu w stylu dzikiego zachodu.",
+        },
+        {
+          id: 11,
+          title: "Wiadro",
+          shortDesc: "Projekt realizowany na potrzeby studiów, modelowanie 3D",
+          fullDesc:
+            "Nauka podstaw modelowania obiektów typu Hard Surface. Skupiłem się na prawidłowej topologii i teksturach.",
+          image: "./3dsmax/Jóźwiak Aleksander - Wiadro.jpg",
+          tags: ["3ds Max"],
+          features: ["Prawidłowa topologia"],
+          challenges: "Poznanie możliwości programu 3ds Max.",
+        },
+        {
+          id: 12,
+          title: "Diorama",
+          shortDesc: "Kawałek miasta wykonany w 3ds Max",
+          fullDesc:
+            "Złożony projekt sceny miejskiej. Składa się z wielu modułowych elementów, które tworzą spójną całość.",
+          image: "./3dsmax/Jóźwiak Aleksander - Diorama.jpg",
+          tags: ["3ds Max"],
+          features: [
+            "Modular design",
+            "Scenery lighting",
+            "Complex composition",
+          ],
+          challenges: "Optymalizacja sceny przy dużej liczbie poligonów.",
+        },
+        {
+          id: 13,
+          title: "Artystyczna latarnia",
+          shortDesc: "Interpretacja latarni, modelowanie 3D",
+          fullDesc:
+            "Zaawansowany model latarni z dużą dbałością o detal. Projekt zaliczeniowy z modelowania 3D.",
+          image: "./3dsmax/Jóźwiak Aleksander - Latarnia.jpg",
+          tags: ["3ds Max"],
+          features: ["Stylized look"],
+          challenges:
+            "Modelowanie skomplikowanych, zaokrąglonych elementów dekoracyjnych.",
+        },
+      ];
+
+      const grid = document.getElementById("projects-grid");
+      const overlay = document.getElementById("modalOverlay");
+      const content = document.getElementById("modalContent");
+
+      function render() {
+        grid.innerHTML = projectsData
+          .map(
+            (p) => `
+          <div class="project" onclick="openM(${p.id})">
+            <img src="${
+              p.image
+            }" onerror="this.src='https://via.placeholder.com/400x250/222/ff8800?text=${encodeURIComponent(
+              p.title
+            )}'">
+            <div class="project-body">
+              <h3>${p.title}</h3>
+              <p>${p.shortDesc}</p>
+              <div class="tags">${p.tags
+                .map((t) => `<span class="tag">${t}</span>`)
+                .join("")}</div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      window.openM = (id) => {
+        const p = projectsData.find((x) => x.id === id);
+        content.innerHTML = `
+        ${
+          p.isMultiImage
+            ? `<div class="images-container modal-header-img">${p.descriptionImages
+                .map(
+                  (i) =>
+                    `<img src="${i}" onerror="this.src='https://via.placeholder.com/150x150/222/ff8800?text=3D'">`
+                )
+                .join("")}</div>`
+            : `<img class="modal-header-img" src="${
+                p.image
+              }" onerror="this.src='https://via.placeholder.com/400x250/222/ff8800?text=${encodeURIComponent(
+                p.title
+              )}'">`
+        }
+          <div class="modal-grid">
+            <div>
+              <h4>O projekcie</h4><p>${p.fullDesc}</p><br>
+              <h4>Wyzwania</h4><p>${p.challenges}</p>
+            </div>
+            <div>
+              <h4>Technologie</h4><div class="tags">${p.tags
+                .map((t) => `<span class="tag">${t}</span>`)
+                .join("")}</div><br>
+              <h4>Funkcje</h4><ul>${p.features
+                .map((f) => `<li>${f}</li>`)
+                .join("")}</ul>
+            </div>
+          </div>
+        `;
+        overlay.style.display = "flex";
+        document.body.classList.add("modal-open");
+      };
+
+      document.getElementById("modalClose").onclick = () => {
+        overlay.style.display = "none";
+        document.body.classList.remove("modal-open");
+      };
+
+      window.onload = render;
+    </script>
   </body>
 </html>
