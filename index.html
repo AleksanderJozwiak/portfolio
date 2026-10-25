@@ -3,21 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Portfolio - Aleksander Jóźwiak | Fullstack Developer</title>
+    <title>Aleksander Jóźwiak – full-stack developer</title>
+    <meta
+      name="description"
+      content="Aleksander Jóźwiak – full-stack developer (.NET, Vue.js, React Native) z Poznania. Doświadczenie komercyjne, integracje AI i projekty gier."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg: #0d0d0d;
-        --bg-alt: #181818;
-        --accent: #ff8800;
-        --text: #f5f5f5;
-        --muted: #b3b3b3;
-        --radius: 18px;
-        --max: 1200px;
-        --overlay: rgba(0, 0, 0, 0.85);
+        --paper: #f3f4f1;
+        --ink: #18201c;
+        --muted: #5a645e;
+        --line: #d5d9d3;
+        --accent: #1f7a5c;
+        --accent-soft: #dcebe3;
+        --measure: 68ch;
+        --wide: 1080px;
       }
 
       * {
@@ -25,837 +31,801 @@
         padding: 0;
         box-sizing: border-box;
       }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
       body {
-        font-family: Poppins, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.5;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-x: hidden;
+        font-family: "Schibsted Grotesk", system-ui, sans-serif;
+        font-size: 17px;
+        line-height: 1.6;
+        background: var(--paper);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
       }
 
-      body.modal-open {
-        overflow: hidden;
+      a {
+        color: var(--accent);
+        text-underline-offset: 3px;
+        text-decoration-thickness: 1px;
+      }
+      a:hover {
+        text-decoration-thickness: 2px;
+      }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 2px;
       }
 
+      .wrap {
+        max-width: var(--wide);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* ---------- header ---------- */
       header {
-        width: 100%;
-        max-width: var(--max);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 24px;
         position: sticky;
         top: 0;
-        background: rgba(13, 13, 13, 0.95);
-        backdrop-filter: blur(8px);
-        z-index: 99;
+        z-index: 10;
+        background: color-mix(in srgb, var(--paper) 92%, transparent);
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid var(--line);
       }
-      .logo {
+      header .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        height: 60px;
+      }
+      .home {
         font-weight: 700;
-        font-size: 22px;
-        color: var(--accent);
+        color: var(--ink);
+        text-decoration: none;
       }
       nav {
         display: flex;
         align-items: center;
+        gap: 22px;
+        font-size: 15px;
       }
       nav a {
-        margin-left: 24px;
-        text-decoration: none;
         color: var(--muted);
-        font-weight: 500;
-        transition: 0.2s;
+        text-decoration: none;
       }
       nav a:hover {
-        color: var(--accent);
+        color: var(--ink);
       }
-
-      .lang-toggle {
-        margin-left: 24px;
-        background: var(--bg-alt);
-        border: 1px solid #333;
-        border-radius: 12px;
-        color: white;
-        padding: 6px 12px;
+      .lang {
+        font: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink);
+        background: transparent;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 3px 10px;
         cursor: pointer;
-        font-size: 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: 0.2s;
       }
-      .lang-toggle:hover {
-        border-color: var(--accent);
+      .lang:hover {
+        border-color: var(--ink);
       }
-      .lang-flag {
-        padding: 0;
-        width: 25px;
-        height: 20px;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-      }
-      .flag {
-        border: 1px solid #333;
-        border-radius: 5px;
-        width: 25px;
-        height: 20px;
+      @media (max-width: 600px) {
+        nav a.optional {
+          display: none;
+        }
       }
 
+      /* ---------- hero ---------- */
       .hero {
-        max-width: var(--max);
-        padding: 60px 24px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-        align-items: center;
+        padding-top: 88px;
+        padding-bottom: 72px;
       }
       .hero h1 {
-        font-size: 48px;
-        margin-bottom: 16px;
+        font-size: clamp(44px, 8vw, 92px);
+        font-weight: 800;
+        line-height: 0.98;
+        letter-spacing: -0.035em;
+        margin-bottom: 28px;
       }
-      .hero p {
-        color: var(--muted);
-        margin-bottom: 24px;
+      .hero .lead {
+        font-size: clamp(19px, 2.2vw, 23px);
+        line-height: 1.45;
+        max-width: 34em;
+        margin-bottom: 28px;
       }
-      .hero img {
-        width: 100%;
-        border-radius: var(--radius);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      .hero .lead strong {
+        font-weight: 500;
       }
-      .btn {
-        display: inline-block;
-        padding: 12px 20px;
-        border-radius: var(--radius);
-        text-decoration: none;
-        font-weight: 600;
-        background: var(--accent);
-        color: white;
-        transition: 0.2s;
-        border: none;
-        cursor: pointer;
-      }
-      .btn:hover {
-        opacity: 0.85;
-        transform: translateY(-2px);
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 26px;
+        font-weight: 500;
       }
 
+      /* ---------- sections ---------- */
       section {
-        max-width: var(--max);
-        width: 100%;
-        padding: 60px 24px;
+        padding: 64px 0;
+        border-top: 1px solid var(--line);
       }
       h2 {
         font-size: 32px;
-        margin-bottom: 20px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+      .section-note {
+        color: var(--muted);
+        max-width: var(--measure);
+        margin-bottom: 36px;
+      }
+      h3 {
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 4px;
       }
 
-      .skills {
+      /* ---------- experience ---------- */
+      .job-head {
         display: flex;
-        gap: 14px;
         flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 4px 24px;
+        margin-bottom: 4px;
       }
-      .skill {
-        padding: 8px 14px;
-        background: var(--bg-alt);
-        border-radius: var(--radius);
-        font-weight: 600;
+      .job-head h3 {
+        font-size: 22px;
+      }
+      .job-meta {
         color: var(--muted);
       }
+      .stack {
+        color: var(--muted);
+        font-size: 15px;
+        margin-bottom: 32px;
+      }
 
-      .projects {
+      .feature {
+        background: var(--accent-soft);
+        border-radius: 6px;
+        padding: 32px;
+        margin-bottom: 40px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 24px;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 24px 48px;
+        align-items: center;
       }
-      .project {
-        background: var(--bg-alt);
-        border-radius: var(--radius);
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: pointer;
-        border: 1px solid transparent;
-        height: 100%;
+      .feature p {
+        max-width: 52ch;
       }
-      .project:hover {
-        transform: translateY(-8px);
-        border-color: var(--accent);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      .feature h3 {
+        font-size: 22px;
+        margin-bottom: 8px;
       }
-      .project img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-      }
-      .images-container {
-        margin-top: 10px;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        height: 190px;
-        padding: 10px;
-      }
-      .images-container img {
-        width: 30%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 8px;
-        border: 1px solid #333;
-      }
-      .project-body {
-        padding: 20px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-      }
-      .project-body h3 {
-        margin-bottom: 10px;
+      .before-after {
+        font-size: clamp(36px, 5vw, 56px);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        white-space: nowrap;
         color: var(--accent);
       }
-      .project-body p {
+      .before-after s {
+        color: var(--muted);
+        font-weight: 500;
+        text-decoration-thickness: 3px;
+      }
+      .before-after small {
+        display: block;
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: 0;
+        color: var(--muted);
+        margin-top: 10px;
+        white-space: normal;
+      }
+      @media (max-width: 760px) {
+        .feature {
+          grid-template-columns: 1fr;
+          padding: 24px;
+        }
+      }
+
+      .work-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 48px;
+      }
+      .work-list p {
+        color: var(--muted);
+      }
+      @media (max-width: 760px) {
+        .work-list {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .earlier {
+        margin-top: 48px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      /* ---------- projects ---------- */
+      .group + .group {
+        margin-top: 56px;
+      }
+      .group-title {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--muted);
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+
+      .games {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 44px 40px;
+      }
+      @media (max-width: 760px) {
+        .games {
+          grid-template-columns: 1fr;
+        }
+      }
+      .shot {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: 4px;
+        background: var(--line);
+        display: block;
+        margin-bottom: 14px;
+      }
+      .shots {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+      .shots img {
+        width: 100%;
+        aspect-ratio: 9 / 16;
+        object-fit: cover;
+        border-radius: 4px;
+        background: var(--line);
+      }
+      .proj p {
+        color: var(--muted);
+      }
+      .tech {
         font-size: 14px;
         color: var(--muted);
-        margin-bottom: 15px;
+        margin-top: 6px;
       }
-      .tags {
-        margin-top: auto;
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
+      .tech b {
+        font-weight: 500;
+        color: var(--ink);
       }
-      .tag {
-        background: #222;
-        padding: 4px 10px;
-        border-radius: 8px;
-        font-size: 12px;
-        color: var(--muted);
+      .proj-link {
+        display: inline-block;
+        margin-top: 6px;
+        font-weight: 500;
+        font-size: 15px;
       }
 
-      /* MODAL STYLES */
-      .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--overlay);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        padding: 20px;
-        backdrop-filter: blur(6px);
+      details {
+        margin-top: 10px;
+        font-size: 15px;
       }
-
-      .modal-container {
-        background: var(--bg-alt);
-        max-width: 900px;
-        width: 100%;
-        max-height: 90vh;
-        border-radius: var(--radius);
-        position: relative;
-        overflow-y: auto;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-        border: 1px solid #333;
-      }
-
-      .modal-close {
-        position: sticky;
-        top: 20px;
-        float: right;
-        margin-right: 20px;
-        background: #222;
-        border: none;
-        color: var(--text);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
+      summary {
         cursor: pointer;
-        font-size: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10;
+        color: var(--ink);
+        font-weight: 500;
+        width: fit-content;
       }
-
-      .modal-content {
-        padding: 40px;
-      }
-
-      .modal-header-img {
-        width: 100%;
-        height: 350px;
-        object-fit: cover;
-        border-radius: 12px;
-        margin-bottom: 30px;
-      }
-
-      .modal-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 40px;
-      }
-
-      @media (max-width: 768px) {
-        .modal-grid {
-          grid-template-columns: 1fr;
-        }
-        .modal-header-img {
-          height: 200px;
-        }
-        .hero {
-          grid-template-columns: 1fr;
-          text-align: center;
-        }
-        .hero img {
-          order: -1;
-        }
-      }
-
-      .detail-item {
-        margin-bottom: 25px;
-      }
-
-      .detail-item h4 {
+      summary:hover {
         color: var(--accent);
-        text-transform: uppercase;
-        font-size: 13px;
-        margin-bottom: 10px;
+      }
+      details[open] summary {
+        margin-bottom: 8px;
+      }
+      details dl {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 6px 16px;
+        color: var(--muted);
+      }
+      details dt {
+        color: var(--ink);
+        font-weight: 500;
       }
 
-      .contact-info {
+      .small-list {
+        list-style: none;
         display: grid;
-        gap: 15px;
-        font-size: 16px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 40px;
+      }
+      @media (max-width: 760px) {
+        .small-list {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+      }
+      @media (max-width: 860px) {
+        .gallery {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      .gallery figure img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 4px;
+        background: var(--line);
+        display: block;
+        margin-bottom: 8px;
+      }
+      .gallery figcaption {
+        font-size: 14px;
         color: var(--muted);
+        line-height: 1.4;
+      }
+      .gallery figcaption b {
+        display: block;
+        color: var(--ink);
+        font-weight: 500;
+      }
+
+      /* ---------- contact ---------- */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 10px 32px;
+        font-size: 18px;
+      }
+      .contact-grid dt {
+        color: var(--muted);
+      }
+      @media (max-width: 520px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 2px;
+        }
+        .contact-grid dd {
+          margin-bottom: 12px;
+        }
       }
 
       footer {
-        margin-top: 60px;
-        padding: 30px;
-        text-align: center;
+        border-top: 1px solid var(--line);
+        padding: 28px 0 40px;
         color: var(--muted);
-        border-top: 1px solid #222;
-        width: 100%;
+        font-size: 14px;
       }
     </style>
   </head>
   <body>
     <header>
-      <div class="logo">AJ</div>
-      <nav>
-        <a href="#about" data-i18n="nav-about">O mnie</a>
-        <a href="#projects" data-i18n="nav-projects">Projekty</a>
-        <a href="#contact" data-i18n="nav-contact">Kontakt</a>
-        <button class="lang-toggle" onclick="toggleLanguage()">
-          <span id="lang-flag" class="lang-flag"
-            ><img src="./flags/uk.gif" class="flag"
-          /></span>
-          <span id="lang-text" style="font-size: 14px; font-weight: 600"
-            >EN</span
-          >
-        </button>
-      </nav>
+      <div class="wrap">
+        <a class="home" href="#top">Aleksander Jóźwiak</a>
+        <nav aria-label="Menu">
+          <a href="#experience" class="optional" data-i18n="nav-exp">Doświadczenie</a>
+          <a href="#projects" class="optional" data-i18n="nav-projects">Projekty</a>
+          <a href="#contact" data-i18n="nav-contact">Kontakt</a>
+          <button class="lang" id="lang" type="button" aria-label="Switch to English">EN</button>
+        </nav>
+      </div>
     </header>
 
-    <section class="hero">
-      <div>
-        <h1>
-          Aleksander
-          <div style="color: var(--accent)">Jóźwiak</div>
-        </h1>
-        <p data-i18n="hero-p">
-          Jestem fullstack developerem z doświadczeniem w C# oraz Vue.js, a
-          także w tworzeniu aplikacji mobilnych z wykorzystaniem Expo i React
-          Native. Tworzenie gier w Unity traktuję jako moją pasję, którą
-          rozwijam równolegle.
-        </p>
-        <a href="#projects" class="btn" data-i18n="btn-projects"
-          >Zobacz projekty</a
-        >
-        <br />
-        <br />
-        <a
-          href="https://github.com/AleksanderJozwiak"
-          target="_blank"
-          class="btn"
-          data-i18n="btn-github"
-          >Sprawdź Gita</a
-        >
-      </div>
-      <img src="./3dsmax/latarnia.jpg" alt="lamp" />
-    </section>
-
-    <section id="about">
-      <h2 data-i18n="about-h2">O mnie</h2>
-      <p data-i18n="about-p">
-        Na co dzień zajmuję się projektowaniem i implementacją aplikacji
-        webowych jako fullstack developer. W pracy korzystam głównie z C#,
-        Vue.js oraz technologii frontendowych i backendowych. Mam również
-        doświadczenie w budowie aplikacji mobilnych opartych o Expo React
-        Native. Po godzinach rozwijam swoją pasję do gamedevu, tworząc projekty
-        w Unity i eksperymentując z mechanikami gameplayu.
-      </p>
-      <div class="skills" style="margin-top: 20px">
-        <span class="skill">C#</span>
-        <span class="skill">.NET</span>
-        <span class="skill">Vue.js</span>
-        <span class="skill">JavaScript</span>
-        <span class="skill">React Native</span>
-        <span class="skill">Expo</span>
-        <span class="skill">TypeScript</span>
-        <span class="skill">TSQL</span>
-        <span class="skill">C++</span>
-        <span class="skill">Unity</span>
-        <span class="skill">HTML + CSS</span>
-        <span class="skill">Gimp</span>
-        <span class="skill">Podstawy 3ds Max</span>
-      </div>
-    </section>
-
-    <section id="projects">
-      <h2>
-        <span data-i18n="projects-h2">Projekty</span>
-        <small
-          style="font-size: 14px; font-weight: normal; color: var(--muted)"
-          data-i18n="projects-small"
-          >(Kliknij kafelek po szczegóły)</small
-        >
-      </h2>
-      <div class="projects" id="projects-grid"></div>
-    </section>
-
-    <section id="contact">
-      <h2 data-i18n="contact-h2">Kontakt</h2>
-      <div class="contact-info">
-        <div>
-          📧
-          <a
-            href="mailto:jozwiakaleksander@gmail.com"
-            style="color: var(--accent); text-decoration: none"
-            >jozwiakaleksander@gmail.com</a
-          >
+    <main id="top">
+      <div class="wrap hero">
+        <h1>Aleksander<br />Jóźwiak</h1>
+        <p class="lead" data-i18n-html="lead"></p>
+        <div class="links">
+          <a href="https://github.com/AleksanderJozwiak" target="_blank" rel="noopener">GitHub</a>
+          <!-- TODO: sprawdź, który adres LinkedIna jest poprawny -->
+          <a href="https://www.linkedin.com/in/aleksander-jozwiak" target="_blank" rel="noopener">LinkedIn</a>
+          <!-- TODO: wrzuć PDF z CV obok index.html jako cv.pdf -->
+          <a href="./cv.pdf" target="_blank" rel="noopener" data-i18n="cv">CV (PDF)</a>
+          <a href="mailto:jozwiakaleksander@gmail.com">jozwiakaleksander@gmail.com</a>
         </div>
-        <div>📱 +48 602 220 129</div>
       </div>
-    </section>
 
-    <footer id="footer">© 2026 Aleksander Jóźwiak</footer>
+      <section id="experience">
+        <div class="wrap">
+          <h2 data-i18n="exp-h2">Doświadczenie</h2>
+          <p class="section-note" data-i18n="exp-note"></p>
 
-    <div class="modal-overlay" id="modalOverlay">
-      <div class="modal-container">
-        <button class="modal-close" id="modalClose">&times;</button>
-        <div class="modal-content" id="modalContent"></div>
-      </div>
-    </div>
+          <div class="job-head">
+            <h3>Full-stack developer, SoftwareStudio Sp. z o.o.</h3>
+            <span class="job-meta" data-i18n="job-meta">03.2023 – 09.2026, Poznań</span>
+          </div>
+          <p class="stack">.NET (C#), Vue.js, TypeScript, React Native, Expo, MS SQL, Docker, GitLab CI/CD</p>
+
+          <div class="feature">
+            <div>
+              <h3 data-i18n="feat-h3"></h3>
+              <p data-i18n="feat-p"></p>
+            </div>
+            <div class="before-after" aria-hidden="true">
+              <s>1,5 h</s> 30 min
+              <small data-i18n="feat-small"></small>
+            </div>
+          </div>
+
+          <ul class="work-list" id="work-list"></ul>
+
+          <p class="earlier" data-i18n="earlier"></p>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="wrap">
+          <h2 data-i18n="projects-h2">Projekty</h2>
+          <p class="section-note" data-i18n="projects-note"></p>
+
+          <div class="group">
+            <h3 class="group-title" data-i18n="g-games">Gry</h3>
+            <div class="games" id="games"></div>
+          </div>
+
+          <div class="group">
+            <h3 class="group-title" data-i18n="g-other">Web, prototypy i inne</h3>
+            <ul class="small-list" id="other"></ul>
+          </div>
+
+          <div class="group">
+            <h3 class="group-title" data-i18n="g-3d">Grafika 3D i level design</h3>
+            <div class="gallery" id="gallery"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="wrap">
+          <h2 data-i18n="contact-h2">Kontakt</h2>
+          <p class="section-note" data-i18n="contact-note"></p>
+          <dl class="contact-grid">
+            <dt>E-mail</dt>
+            <dd><a href="mailto:jozwiakaleksander@gmail.com">jozwiakaleksander@gmail.com</a></dd>
+            <dt data-i18n="phone">Telefon</dt>
+            <dd><a href="tel:+48602220129">+48 602 220 129</a></dd>
+            <dt>GitHub</dt>
+            <dd><a href="https://github.com/AleksanderJozwiak" target="_blank" rel="noopener">github.com/AleksanderJozwiak</a></dd>
+            <dt>LinkedIn</dt>
+            <dd><a href="https://www.linkedin.com/in/aleksander-jozwiak" target="_blank" rel="noopener">linkedin.com/in/aleksander-jozwiak</a></dd>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">© 2026 Aleksander Jóźwiak</div>
+    </footer>
 
     <script>
-      let currentLang = "pl";
-
-      const translations = {
+      const T = {
         pl: {
-          "nav-about": "O mnie",
+          "nav-exp": "Doświadczenie",
           "nav-projects": "Projekty",
           "nav-contact": "Kontakt",
-          "hero-p":
-            "Jestem fullstack developerem z doświadczeniem w C# oraz Vue.js, a także w tworzeniu aplikacji mobilnych z wykorzystaniem Expo i React Native. Tworzenie gier w Unity traktuję jako moją pasję, którą rozwijam równolegle.",
-          "btn-projects": "Zobacz projekty",
-          "btn-github": "Sprawdź Gita",
-          "about-h2": "O mnie",
-          "about-p":
-            "Na co dzień zajmuję się projektowaniem i implementacją aplikacji webowych jako fullstack developer. W pracy korzystam głównie z C#, Vue.js oraz technologii frontendowych i backendowych. Mam również doświadczenie w budowie aplikacji mobilnych opartych o Expo React Native. Po godzinach rozwijam swoją pasję do gamedevu, tworząc projekty w Unity i eksperymentując z mechanikami gameplayu.",
+          lead:
+            "Full-stack developer z Poznania. Od 3,5 roku buduję aplikacje webowe i mobilne w <strong>.NET, Vue.js i React Native</strong>, a ostatnio coraz częściej łączę je z modelami AI. Po godzinach robię gry w Unity i uczę się cyberbezpieczeństwa.",
+          cv: "CV (PDF)",
+          "exp-h2": "Doświadczenie",
+          "exp-note":
+            "Wybrane rzeczy, które zbudowałem w pracy. To oprogramowanie wewnętrzne klientów, więc zamiast zrzutów ekranu jest opis.",
+          "job-meta": "03.2023 – 09.2026, Poznań",
+          "feat-h3": "Konfiguracja dokumentów przez AI",
+          "feat-p":
+            "Ręczne przygotowanie komponentu „Dokument” wymagało napisania zapytań SQL, ułożenia kontrolek formularza, tłumaczeń, wyglądu i zdarzeń przycisków. Zintegrowałem z systemem model AI: użytkownik opisuje na czacie, czego potrzebuje, a AI przygotowuje prawie gotową konfigurację do przejrzenia i poprawek.",
+          "feat-small": "czas konfiguracji jednego dokumentu",
+          earlier:
+            "Wcześniej: obsługa klienta w Castoramie (10.2022 – 02.2023), doradztwo techniczne i sprzedaż.",
           "projects-h2": "Projekty",
-          "projects-small": "(Kliknij kafelek po szczegóły)",
+          "projects-note":
+            "Gry to moje programistyczne hobby, część powstała na studiach w zespołach. Przy każdym projekcie piszę, za co odpowiadałem.",
+          "g-games": "Gry",
+          "g-other": "Web, prototypy i inne",
+          "g-3d": "Grafika 3D i level design",
+          more: "Wyzwania i funkcje",
+          challenges: "Wyzwania",
+          features: "Funkcje",
+          tech: "Technologie",
+          play: "Zagraj na itch.io",
+          code: "Kod na GitHubie",
           "contact-h2": "Kontakt",
-          "modal-about": "O projekcie",
-          "modal-challenges": "Wyzwania",
-          "modal-tech": "Technologie",
-          "modal-features": "Funkcje",
+          "contact-note":
+            "Szukam pracy jako full-stack developer, stacjonarnie w Poznaniu, hybrydowo lub zdalnie. Najszybciej odpowiadam na maila.",
+          phone: "Telefon",
+          langBtn: "EN",
+          langLabel: "Switch to English",
         },
         en: {
-          "nav-about": "About",
+          "nav-exp": "Experience",
           "nav-projects": "Projects",
           "nav-contact": "Contact",
-          "hero-p":
-            "I am a fullstack developer with experience in C# and Vue.js, as well as in creating mobile applications using Expo and React Native. I treat game development in Unity as a passion that I develop in parallel.",
-          "btn-projects": "View Projects",
-          "btn-github": "Check GitHub",
-          "about-h2": "About Me",
-          "about-p":
-            "Every day, I design and implement web applications as a fullstack developer. In my work, I mainly use C#, Vue.js, and both frontend and backend technologies. I also have experience in building mobile applications based on Expo React Native. After hours, I pursue my passion for gamedev by creating projects in Unity and experimenting with gameplay mechanics.",
+          lead:
+            "Full-stack developer based in Poznań, Poland. For 3.5 years I've been building web and mobile apps with <strong>.NET, Vue.js and React Native</strong>, more and more often connected to AI models. Outside work I make games in Unity and study cybersecurity.",
+          cv: "CV (PDF)",
+          "exp-h2": "Experience",
+          "exp-note":
+            "A selection of things I built at work. It's internal software for clients, so there are descriptions instead of screenshots.",
+          "job-meta": "03.2023 – 09.2026, Poznań",
+          "feat-h3": "AI-assisted document configuration",
+          "feat-p":
+            "Setting up a “Document” component by hand meant writing SQL queries, placing form controls, adding translations, styling and button events. I integrated an AI model into the system: users describe what they need in a chat and the AI prepares a near-complete configuration to review and adjust.",
+          "feat-small": "time to configure one document",
+          earlier:
+            "Before that: customer service at Castorama (10.2022 – 02.2023), technical advice and sales.",
           "projects-h2": "Projects",
-          "projects-small": "(Click tile for details)",
+          "projects-note":
+            "Games are my programming hobby; some were made at university in teams. For each one I note what I was responsible for.",
+          "g-games": "Games",
+          "g-other": "Web, prototypes and more",
+          "g-3d": "3D art and level design",
+          more: "Challenges and features",
+          challenges: "Challenges",
+          features: "Features",
+          tech: "Tech",
+          play: "Play on itch.io",
+          code: "Code on GitHub",
           "contact-h2": "Contact",
-          "modal-about": "About Project",
-          "modal-challenges": "Challenges",
-          "modal-tech": "Technologies",
-          "modal-features": "Features",
+          "contact-note":
+            "I'm looking for a full-stack developer role: on-site in Poznań, hybrid or remote. Email is the fastest way to reach me.",
+          phone: "Phone",
+          langBtn: "PL",
+          langLabel: "Przełącz na polski",
         },
       };
 
-      const projectsData = [
+      const work = [
         {
-          id: 1,
-          title_pl: "Platforma edukacyjno medyczna",
-          title_en: "Medical Education Platform",
-          shortDesc_pl:
-            "Platforma edukacyjna w oparciu o C# EntityFramework i Vue.js",
-          shortDesc_en:
-            "Education platform based on C#, Entity Framework and Vue.js",
-          fullDesc_pl:
-            "Kompleksowy system zarządzania kursami medycznymi. Zaimplementowałem pełną architekturę od bazy danych po interfejs użytkownika.",
-          fullDesc_en:
-            "Comprehensive system for managing medical courses. I implemented the full architecture from database to user interface.",
-          image: "./under-construction.jpg",
-          tags: ["C#", "SQL", "Vue.js"],
-          features_pl: [
-            "System ról",
-            "Integracja EF Core",
-            "Integracja Stripe",
-          ],
-          features_en: [
-            "Role system",
-            "EF Core integration",
-            "Stripe integration",
-          ],
-          challenges_pl:
-            "Zapewnienie bezpieczeństwa wrażliwych danych użytkownika. Stworzenie systemu subskrypcji.",
-          challenges_en:
-            "Ensuring security of sensitive user data. Creating a subscription system.",
+          pl: ["Wtyczka VS Code do code review przez AI", "Wysyła zmiany z gita do firmowego modelu AI i wskazuje błędy jeszcze w trakcie pracy, zanim kod trafi do pipeline’u. Ta sama weryfikacja została potem dodana jako krok w GitLab CI/CD."],
+          en: ["VS Code extension for AI code review", "Sends local git changes to the company’s AI model and flags issues while work is still in progress, before code reaches the pipeline. The same check was later added as a GitLab CI/CD step."],
         },
         {
-          id: 2,
-          title_pl: "Soror",
-          title_en: "Soror",
-          shortDesc_pl: "Dynamiczny boss rush, 1hp soulslike",
-          shortDesc_en: "Dynamic boss rush, 1hp soulslike",
-          fullDesc_pl:
-            "Projekt skupiony na 'game feelu' i precyzji sterowania. Zaimplementowałem wszystkie mechaniki gracza oraz byłem również odpowiedzialny za warstwę audio wprowadzoną do gry.",
-          fullDesc_en:
-            "Project focused on 'game feel' and control precision. I implemented all player mechanics and was also responsible for the audio layer introduced into the game.",
-          image: "./soror/wip.png",
-          tags: ["C#", "Unity"],
-          features_pl: [
-            "Custom movement",
-            "Player input system",
-            "Hitbox system",
-          ],
-          features_en: [
-            "Custom movement",
-            "Player input system",
-            "Hitbox system",
-          ],
-          challenges_pl:
-            "Optymalizacja detekcji kolizji. System kierunkowego blokowania ataków przeciwnika. Obsługa kontrolera oraz klawiatury i myszy.",
-          challenges_en:
-            "Collision detection optimization. Directional blocking system. Support for controller, keyboard, and mouse.",
+          pl: ["Aplikacja mobilna dla kierowców", "Opiekowałem się aplikacją w React Native i Expo: buildy w EAS, wydania produkcyjne w sklepach, utrzymanie. Kierowca dostaje zamówienie, uzupełnia listę przed wyjazdem i startuje z śledzeniem lokalizacji."],
+          en: ["Mobile app for drivers", "I looked after the React Native and Expo app: EAS builds, production releases to the stores and maintenance. Drivers receive an order, complete a pre-departure checklist and start the job with location tracking."],
         },
         {
-          id: 3,
-          title_pl: "Spacetaker",
-          title_en: "Spacetaker",
-          shortDesc_pl: "Gra multiplayer z obsługą Steam",
-          shortDesc_en: "Multiplayer game with Steam support",
-          fullDesc_pl:
-            "Sieciowa strzelanka w kosmosie. Odpowiadałem za integrację ze Steamworks.NET oraz cały netcode.",
-          fullDesc_en:
-            "Online space shooter. I was responsible for Steamworks.NET integration and the entire netcode.",
-          image: "./spacetaker/spacetaker.jpg",
-          tags: ["C#", "Unity"],
-          features_pl: ["Steam Lobbies", "Network Sync"],
-          features_en: ["Steam Lobbies", "Network Sync"],
-          challenges_pl:
-            "Synchronizacja pozycji graczy przy wysokich prędkościach w kosmosie.",
-          challenges_en: "Syncing player positions at high speeds in space.",
+          pl: ["Testy E2E aplikacji mobilnej", "Wprowadziłem testy w Maestro uruchamiane w GitLab CI/CD, które wyłapują regresje przed każdym wydaniem."],
+          en: ["Mobile E2E tests", "Introduced Maestro tests running in GitLab CI/CD that catch regressions before every release."],
         },
         {
-          id: 4,
-          title_pl: "Szachy w C++",
-          title_en: "Chess in C++",
-          shortDesc_pl: "Autorski silnik szachowy w C++ i SFML",
-          shortDesc_en: "Custom chess engine in C++ and SFML",
-          fullDesc_pl:
-            "Projekt skupiony na logice obiektowej i algorytmach. Cała logika gry napisana od zera bez użycia gotowych silników.",
-          fullDesc_en:
-            "Project focused on object-oriented logic and algorithms. Entire game logic written from scratch without using ready-made engines.",
-          image: "./szachy/szachy.PNG",
-          tags: ["C++", "SFML"],
-          features_pl: ["Walidacja ruchów", "Roszada/En passant"],
-          features_en: ["Move validation", "Castling/En passant"],
-          challenges_pl: "Złożoność algorytmu sprawdzającego stan mata i pata.",
-          challenges_en:
-            "Complexity of the checkmate and stalemate detection algorithm.",
+          pl: ["Generator testów Playwright", "Firmowa wtyczka do przeglądarek opartych na Chromium, która pozwalała szybko tworzyć testy E2E w Playwright, zanim firma zaczęła używać do tego AI."],
+          en: ["Playwright test generator", "An internal extension for Chromium-based browsers for quickly creating Playwright E2E tests, before the company started using AI for it."],
         },
         {
-          id: 5,
-          title_pl: "drOp!",
-          title_en: "drOp!",
-          shortDesc_pl: "Zręcznościowa gra mobilna na Sklep Play",
-          shortDesc_en: "Arcade mobile game on Play Store",
-          fullDesc_pl:
-            "Gra mobilna wydana na platformę Android. Przeszła pełny proces od pomysłu do publikacji.",
-          fullDesc_en:
-            "Mobile game released on the Android platform. Went through the full process from concept to publication.",
-          image: "./drop/main.jpg",
-          isMultiImage: true,
-          descriptionImages: [
-            "./drop/logo.jpg",
-            "./drop/menu.jpg",
-            "./drop/ingame.jpg",
-          ],
-          tags: ["Unity", "C#"],
-          features_pl: ["Google Ads", "Mobile UI", "Developer Console"],
-          features_en: ["Google Ads", "Mobile UI", "Developer Console"],
-          challenges_pl:
-            "Dostosowanie wydajności pod szeroką gamę urządzeń mobilnych.",
-          challenges_en:
-            "Adapting performance for a wide range of mobile devices.",
+          pl: ["Klient poczty w systemie", "Integracja z serwerem pocztowym, dzięki której użytkownicy odbierają, wysyłają i porządkują maile bez wychodzenia z aplikacji."],
+          en: ["Built-in email client", "Mail server integration that lets users receive, send and organise email without leaving the application."],
         },
         {
-          id: 6,
-          title_pl: "Where's my remote",
-          title_en: "Where's my remote",
-          shortDesc_pl: "Poszukiwania pilota w wirtualnym świecie",
-          shortDesc_en: "Searching for the remote in a virtual world",
-          fullDesc_pl:
-            "Eksperyment z rozszerzoną rzeczywistością. Prosta gra wymagająca od gracza poszukiwania pilota na czas zanim rozpocznie się jego ulubiony program. Zaimplementowałem win/lose condition.",
-          fullDesc_en:
-            "Virtual reality experiment. Simple game requiring player to find the remote before their favorite show starts. Implemented win/lose conditions.",
-          image: "./remote/remote.png",
-          tags: ["VR", "Unity", "C#"],
-          features_pl: ["Rzeczywistość wirtualna"],
-          features_en: ["Virtual Reality"],
-          challenges_pl: "Obsługa kontrolerów od VR",
-          challenges_en: "VR controller support",
+          pl: ["Silnik ankiet", "Ankiety trafiają do konkretnych grup odbiorców zależnie od konfiguracji komponentu i wcześniejszych odpowiedzi użytkownika."],
+          en: ["Survey engine", "Surveys reach specific recipient groups depending on the component configuration and the user’s previous answers."],
         },
         {
-          id: 7,
-          title_pl: "Room Rumble",
-          title_en: "Room Rumble",
-          shortDesc_pl: "FPS rogue-lite z proceduralną generacją",
-          shortDesc_en: "FPS rogue-lite with procedural generation",
-          fullDesc_pl:
-            "Eksperyment z algorytmami generowania lochów. Każda rozgrywka oferuje inny układ pomieszczeń.",
-          fullDesc_en:
-            "Experiment with dungeon generation algorithms. Every playthrough offers a different room layout.",
-          image: "./room-rumble/rumble.png",
-          tags: ["Unity", "C#"],
-          features_pl: ["Proceduralny generator lochów", "AI Navigation"],
-          features_en: ["Procedural Dungeon Generator", "AI Navigation"],
-          challenges_pl:
-            "Stworzenie algorytmu generującego mapy, które zawsze są możliwe do ukończenia.",
-          challenges_en:
-            "Creating an algorithm that generates maps that are always finishable.",
+          pl: ["Integracje z kurierami", "Połączenie procesu wysyłki z API DHL i DPD."],
+          en: ["Courier integrations", "Connected the shipping process to the DHL and DPD APIs."],
         },
         {
-          id: 8,
-          title_pl: "Prototyp gry Hack & Slash",
-          title_en: "Hack & Slash Prototype",
-          shortDesc_pl: "System walki i niszczalne otoczenie",
-          shortDesc_en: "Combat system and destructible environment",
-          fullDesc_pl:
-            "Skupienie na soczystym systemie walki. Prototyp prezentuje system combo oraz efekty cząsteczkowe przy atakach.",
-          fullDesc_en:
-            "Focus on 'juicy' combat system. Prototype showcases combo system and particle effects during attacks.",
-          image: "./under-construction.jpg",
-          tags: ["C#", "Unity"],
-          features_pl: ["System Combo", "Zniszczalne obiekty", "VFX"],
-          features_en: ["Combo System", "Destructibles", "VFX"],
-          challenges_pl: "Balansowanie animacji i 'impactu' każdego uderzenia.",
-          challenges_en: "Balancing animations and the 'impact' of every hit.",
+          pl: ["Kalkulator spalania", "Osobne narzędzie wyliczające zużycie paliwa ciężarówki na trasie z punktu A do B."],
+          en: ["Fuel consumption calculator", "A standalone tool estimating a truck’s fuel usage on a route from point A to B."],
         },
         {
-          id: 9,
-          title_pl: "Prototyp gry RTS",
-          title_en: "RTS Game Prototype",
-          shortDesc_pl: "Zaznaczanie jednostek i system walki",
-          shortDesc_en: "Selecting units and combat system",
-          fullDesc_pl:
-            "Klasyczny RTS z systemem wydawania rozkazów grupowych i zarządzania zasobami.",
-          fullDesc_en:
-            "A classic RTS with a group command system and resource management.",
-          image: "./under-construction.jpg",
-          tags: ["C#", "Unity"],
-          features_pl: ["Box Selection", "NavMesh Units"],
-          features_en: ["Box Selection", "NavMesh Units"],
-          challenges_pl:
-            "Zarządzanie ścieżkami wielu jednostek jednocześnie (Avoidance).",
-          challenges_en:
-            "Managing the paths of multiple units simultaneously (Avoidance).",
-        },
-        {
-          id: 10,
-          title_pl: "Kanion w klimatach dzikiego zachodu",
-          title_en: "A canyon with a Wild West atmosphere",
-          shortDesc_pl: "Level design w Unreal Engine 5",
-          shortDesc_en: "Level design in Unreal Engine 5",
-          fullDesc_pl:
-            "Projekt artystyczny wykorzystujący technologie dostępne w silniku Unreal Engine 5. Skupienie na kompozycji krajobrazu.",
-          fullDesc_en:
-            "An artistic project utilizing technologies available in the Unreal Engine 5. Focus on landscape composition.",
-          image: "./ue5/level.png",
-          tags: ["Unreal Engine"],
-          features_pl: ["Rzeźbienie krajobrazu"],
-          features_en: ["Landscape sculpting"],
-          challenges_pl: "Dopracowanie klimatu w stylu dzikiego zachodu.",
-          challenges_en: "Refining the Wild West atmosphere.",
-        },
-        {
-          id: 11,
-          title_pl: "Wiadro",
-          title_en: "Bucket",
-          shortDesc_pl:
-            "Projekt realizowany na potrzeby studiów, modelowanie 3D",
-          shortDesc_en: "University project, 3D modeling",
-          fullDesc_pl:
-            "Nauka podstaw modelowania obiektów typu Hard Surface. Skupiłem się na prawidłowej topologii i teksturach.",
-          fullDesc_en:
-            "Learning basics of Hard Surface modeling. Focused on correct topology and textures.",
-          image: "./3dsmax/Jóźwiak Aleksander - Wiadro.jpg",
-          tags: ["3ds Max"],
-          features_pl: ["Prawidłowa topologia"],
-          features_en: ["Correct topology"],
-          challenges_pl: "Poznanie możliwości programu 3ds Max.",
-          challenges_en: "Learning the features of 3ds Max.",
-        },
-        {
-          id: 12,
-          title_pl: "Diorama",
-          title_en: "Diorama",
-          shortDesc_pl: "Kawałek miasta wykonany w 3ds Max",
-          shortDesc_en: "A piece of the city created in 3ds Max",
-          fullDesc_pl:
-            "Złożony projekt sceny miejskiej. Składa się z wielu modułowych elementów, które tworzą spójną całość.",
-          fullDesc_en:
-            "A complex urban scene design. It consists of many modular elements that form a coherent whole.",
-          image: "./3dsmax/Jóźwiak Aleksander - Diorama.jpg",
-          tags: ["3ds Max"],
-          features_pl: [
-            "Konstrukcja modułowa",
-            "Oświetlenie sceniczne",
-            "Złożona kompozycja",
-          ],
-          features_en: [
-            "Modular design",
-            "Scenery lighting",
-            "Complex composition",
-          ],
-          challenges_pl: "Optymalizacja sceny przy dużej liczbie poligonów.",
-          challenges_en:
-            "Optimization of scenes with a large number of polygons.",
-        },
-        {
-          id: 13,
-          title_pl: "Artystyczna latarnia",
-          title_en: "Artistic lantern",
-          shortDesc_pl: "Moja interpretacja latarni miejskiej",
-          shortDesc_en: "My interpretation of a city streetlight",
-          fullDesc_pl:
-            "Zaawansowany model latarni z dużą dbałością o detal. Projekt zaliczeniowy z modelowania 3D.",
-          fullDesc_en:
-            "An advanced model of a city streetlight with great attention to detail. A final project in 3D modeling.",
-          image: "./3dsmax/Jóźwiak Aleksander - Latarnia.jpg",
-          tags: ["3ds Max"],
-          features_pl: ["Stylizowany wygląd"],
-          features_en: ["Stylized look"],
-          challenges_pl:
-            "Modelowanie skomplikowanych, zaokrąglonych elementów dekoracyjnych.",
-          challenges_en: "Modeling complex, rounded decorative elements.",
+          pl: ["Refaktoryzacje i wydajność", "Porządkowanie starszych modułów i optymalizacja zapytań T-SQL. Do tego automatyzacje w n8n, Docker i wdrożenia monitorowane w ArgoCD."],
+          en: ["Refactoring and performance", "Cleaned up legacy modules and optimised T-SQL queries. Also n8n automations, Docker and deployments monitored in ArgoCD."],
         },
       ];
 
-      const grid = document.getElementById("projects-grid");
-      const overlay = document.getElementById("modalOverlay");
-      const content = document.getElementById("modalContent");
+      // Games: shown with screenshots
+      const games = [
+        {
+          title: "Soror",
+          img: "./soror/wip.png",
+          tags: ["Unity", "C#"],
+          pl: {
+            desc: "Boss rush w stylu soulslike, w którym gracz ma jeden punkt życia. Napisałem wszystkie mechaniki postaci gracza i odpowiadałem za dźwięk w grze.",
+            challenges: "Optymalizacja wykrywania kolizji, kierunkowe blokowanie ataków przeciwnika, obsługa pada oraz klawiatury i myszy.",
+            features: "Własny system ruchu, system wejścia gracza, system hitboxów.",
+          },
+          en: {
+            desc: "A one-hit-point soulslike boss rush. I wrote all of the player character’s mechanics and handled the game’s audio.",
+            challenges: "Optimising collision detection, directional blocking of enemy attacks, controller plus keyboard and mouse support.",
+            features: "Custom movement, player input system, hitbox system.",
+          },
+        },
+        {
+          title: "Room Rumble",
+          img: "./room-rumble/rumble.png",
+          tags: ["Unity", "C#"],
+          link: { href: "https://aleksanderjozwiak.itch.io/room-rumble", key: "play" },
+          pl: {
+            desc: "Rogue-lite FPS, w którym każda rozgrywka ma inny układ pomieszczeń. Odpowiadałem za proceduralne generowanie poziomów i mechanikę głównej postaci.",
+            challenges: "Algorytm, który generuje mapy zawsze możliwe do ukończenia.",
+            features: "Proceduralny generator lochów, nawigacja przeciwników.",
+          },
+          en: {
+            desc: "An FPS rogue-lite where every run has a different room layout. I built the procedural level generation and the main character’s mechanics.",
+            challenges: "An algorithm that only generates maps that can always be finished.",
+            features: "Procedural dungeon generator, enemy navigation.",
+          },
+        },
+        {
+          title: "Spacetaker",
+          img: "./spacetaker/spacetaker.jpg",
+          tags: ["Unity", "C#", "Steamworks.NET"],
+          pl: {
+            desc: "Sieciowa strzelanka w kosmosie. Odpowiadałem za integrację ze Steamem i cały netcode.",
+            challenges: "Synchronizacja pozycji graczy poruszających się z dużą prędkością.",
+            features: "Lobby Steam, synchronizacja sieciowa.",
+          },
+          en: {
+            desc: "An online space shooter. I was responsible for the Steam integration and all of the netcode.",
+            challenges: "Keeping fast-moving players’ positions in sync.",
+            features: "Steam lobbies, network sync.",
+          },
+        },
+        {
+          title: "drOp!",
+          shots: ["./drop/logo.jpg", "./drop/menu.jpg", "./drop/ingame.jpg"],
+          tags: ["Unity", "C#", "Android"],
+          pl: {
+            desc: "Zręcznościowa gra mobilna wydana w Sklepie Play. Przeprowadziłem ją przez cały proces, od pomysłu do publikacji.",
+            challenges: "Wydajność na bardzo różnych telefonach.",
+            features: "Reklamy Google, interfejs mobilny, publikacja w Google Play Console.",
+          },
+          en: {
+            desc: "An arcade mobile game released on Google Play. I took it through the whole process, from idea to release.",
+            challenges: "Performance across a wide range of phones.",
+            features: "Google ads, mobile UI, release through Google Play Console.",
+          },
+        },
+        {
+          title: "Where’s my remote",
+          img: "./remote/remote.png",
+          tags: ["Unity", "C#", "VR"],
+          pl: {
+            desc: "Mała gra VR: trzeba znaleźć pilota, zanim zacznie się ulubiony program. Zrobiłem warunki wygranej i przegranej.",
+            challenges: "Obsługa kontrolerów VR.",
+            features: "Rozgrywka w VR na czas.",
+          },
+          en: {
+            desc: "A small VR game: find the remote before your favourite show starts. I built the win and lose conditions.",
+            challenges: "VR controller support.",
+            features: "Timed VR gameplay.",
+          },
+        },
+      ];
 
-      function toggleLanguage() {
-        currentLang = currentLang === "pl" ? "en" : "pl";
+      // Other projects: text only (no screenshots yet)
+      const other = [
+        {
+          title: { pl: "Platforma edukacyjno-medyczna", en: "Medical education platform" },
+          tags: ["C#", "Entity Framework", "Vue.js", "Stripe"],
+          pl: "System do zarządzania kursami medycznymi, od bazy danych po interfejs. Role użytkowników, subskrypcje przez Stripe i ochrona wrażliwych danych.",
+          en: "A system for managing medical courses, from database to UI. User roles, Stripe subscriptions and protection of sensitive data.",
+        },
+        {
+          title: { pl: "Szachy w C++", en: "Chess in C++" },
+          tags: ["C++", "SFML"],
+          link: { href: "https://github.com/AleksanderJozwiak/ChessOOP", key: "code" },
+          pl: "Cała logika gry napisana od zera, obiektowo: walidacja ruchów, roszada, bicie w przelocie, wykrywanie mata i pata.",
+          en: "All game logic written from scratch with OOP: move validation, castling, en passant, checkmate and stalemate detection.",
+        },
+        {
+          title: { pl: "Prototyp hack & slash", en: "Hack & slash prototype" },
+          tags: ["Unity", "C#"],
+          pl: "System combo, niszczalne otoczenie i efekty cząsteczkowe. Najwięcej pracy poszło w wyczucie każdego uderzenia.",
+          en: "Combo system, destructible environment and particle effects. Most of the work went into making each hit feel right.",
+        },
+        {
+          title: { pl: "Prototyp RTS", en: "RTS prototype" },
+          tags: ["Unity", "C#"],
+          pl: "Zaznaczanie jednostek ramką, rozkazy grupowe i zasoby. Wyzwaniem było omijanie się wielu jednostek naraz.",
+          en: "Box selection, group orders and resources. The hard part was many units avoiding each other at once.",
+        },
+      ];
 
-        // Update UI text
-        document.querySelectorAll("[data-i18n]").forEach((el) => {
-          const key = el.getAttribute("data-i18n");
-          el.innerText = translations[currentLang][key];
-        });
+      const art = [
+        { img: "./ue5/level.png", pl: ["Kanion na Dzikim Zachodzie", "Level design, Unreal Engine 5"], en: ["Wild West canyon", "Level design, Unreal Engine 5"] },
+        { img: "./3dsmax/Jóźwiak Aleksander - Diorama.jpg", pl: ["Diorama miejska", "Modułowa scena, 3ds Max"], en: ["City diorama", "Modular scene, 3ds Max"] },
+        { img: "./3dsmax/Jóźwiak Aleksander - Latarnia.jpg", pl: ["Latarnia", "Stylizowany model, 3ds Max"], en: ["Street lamp", "Stylised model, 3ds Max"] },
+        { img: "./3dsmax/Jóźwiak Aleksander - Wiadro.jpg", pl: ["Wiadro", "Hard surface, 3ds Max"], en: ["Bucket", "Hard surface, 3ds Max"] },
+      ];
 
-        // Update flag toggle button
-        document.getElementById("lang-flag").innerHTML =
-          currentLang === "pl"
-            ? `<img src="./flags/uk.gif" class="flag">`
-            : `<img src="./flags/pl.gif" class="flag">`;
-        document.getElementById("lang-text").innerText =
-          currentLang === "pl" ? "EN" : "PL";
-
-        render();
-      }
+      let lang = "pl";
+      const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
       function render() {
-        grid.innerHTML = projectsData
-          .map(
-            (p) => `
-          <div class="project" onclick="openM(${p.id})">
-            <img src="${p.image}">
-            <div class="project-body">
-              <h3>${p["title_" + currentLang]}</h3>
-              <p>${p["shortDesc_" + currentLang]}</p>
-              <div class="tags">${p.tags
-                .map((t) => `<span class="tag">${t}</span>`)
-                .join("")}</div>
-            </div>
-          </div>
-        `
-          )
+        const t = T[lang];
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          el.textContent = t[el.dataset.i18n];
+        });
+        document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+          el.innerHTML = t[el.dataset.i18nHtml];
+        });
+
+        const btn = document.getElementById("lang");
+        btn.textContent = t.langBtn;
+        btn.setAttribute("aria-label", t.langLabel);
+
+        document.getElementById("work-list").innerHTML = work
+          .map((w) => `<li><h3>${esc(w[lang][0])}</h3><p>${esc(w[lang][1])}</p></li>`)
+          .join("");
+
+        document.getElementById("games").innerHTML = games
+          .map((g) => {
+            const d = g[lang];
+            const media = g.shots
+              ? `<div class="shots">${g.shots.map((s) => `<img src="${s}" alt="${esc(g.title)}" loading="lazy">`).join("")}</div>`
+              : `<img class="shot" src="${g.img}" alt="${esc(g.title)}" loading="lazy">`;
+            const link = g.link ? `<a class="proj-link" href="${g.link.href}" target="_blank" rel="noopener">${t[g.link.key]}</a>` : "";
+            return `<article class="proj">
+              ${media}
+              <h3>${esc(g.title)}</h3>
+              <p>${esc(d.desc)}</p>
+              <p class="tech"><b>${t.tech}:</b> ${g.tags.join(", ")}</p>
+              ${link}
+              <details>
+                <summary>${t.more}</summary>
+                <dl>
+                  <dt>${t.challenges}</dt><dd>${esc(d.challenges)}</dd>
+                  <dt>${t.features}</dt><dd>${esc(d.features)}</dd>
+                </dl>
+              </details>
+            </article>`;
+          })
+          .join("");
+
+        document.getElementById("other").innerHTML = other
+          .map((o) => {
+            const link = o.link ? `<a class="proj-link" href="${o.link.href}" target="_blank" rel="noopener">${t[o.link.key]}</a>` : "";
+            return `<li class="proj">
+              <h3>${esc(o.title[lang])}</h3>
+              <p>${esc(o[lang])}</p>
+              <p class="tech"><b>${t.tech}:</b> ${o.tags.join(", ")}</p>
+              ${link}
+            </li>`;
+          })
+          .join("");
+
+        document.getElementById("gallery").innerHTML = art
+          .map((a) => `<figure>
+              <img src="${encodeURI(a.img)}" alt="${esc(a[lang][0])}" loading="lazy">
+              <figcaption><b>${esc(a[lang][0])}</b>${esc(a[lang][1])}</figcaption>
+            </figure>`)
           .join("");
       }
 
-      window.openM = (id) => {
-        const p = projectsData.find((x) => x.id === id);
-        const trans = translations[currentLang];
+      document.getElementById("lang").addEventListener("click", () => {
+        lang = lang === "pl" ? "en" : "pl";
+        render();
+      });
 
-        content.innerHTML = `
-        ${
-          p.isMultiImage
-            ? `<div class="images-container modal-header-img">${p.descriptionImages
-                .map((i) => `<img src="${i}">`)
-                .join("")}</div>`
-            : `<img class="modal-header-img" src="${p.image}">`
-        }
-          <div class="modal-grid">
-            <div>
-              <h4>${trans["modal-about"]}</h4><p>${
-          p["fullDesc_" + currentLang]
-        }</p><br>
-              <h4>${trans["modal-challenges"]}</h4><p>${
-          p["challenges_" + currentLang]
-        }</p>
-            </div>
-            <div>
-              <h4>${trans["modal-tech"]}</h4><div class="tags">${p.tags
-          .map((t) => `<span class="tag">${t}</span>`)
-          .join("")}</div><br>
-              <h4>${trans["modal-features"]}</h4><ul>${p[
-          "features_" + currentLang
-        ]
-          .map((f) => `<li>${f}</li>`)
-          .join("")}</ul>
-            </div>
-          </div>
-        `;
-        overlay.style.display = "flex";
-        document.body.classList.add("modal-open");
-      };
-
-      document.getElementById("modalClose").onclick = () => {
-        overlay.style.display = "none";
-        document.body.classList.remove("modal-open");
-      };
-
-      window.onload = render;
+      render();
     </script>
   </body>
 </html>
